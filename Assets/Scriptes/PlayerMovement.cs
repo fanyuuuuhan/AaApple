@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float jump = 2f;
     public float speed = 2f;
     float movement;
+    bool isflip = false;
 
     //地面偵測
     bool isGround = false;
@@ -33,6 +34,17 @@ public class PlayerMovement : MonoBehaviour
     public float knockback = 5f;
     bool isKnock = false;
     public float knockTime = 0.5f;
+
+    //攻擊偵測
+    public GameObject weapon;      // 指定要旋轉的物件
+    public float rotateSpeed = 200f; // 旋轉速度（度/秒）
+    private bool rotatingToTarget = false;
+    bool turnback = false;
+    private Quaternion targetRotation;
+
+    //丟假牙
+    public GameObject Falsetooth;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -95,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         isKnock = false;
     }
 
-    // Update is called once per frame
+
     void FixedUpdate()
     {
 
@@ -105,15 +117,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 movement = speed;
                 ani.SetBool("run", true);
-
-                sr.flipX = false;
+                //旋轉整個物件的座標
+                transform.localScale = new Vector3(1, 1, 1);
+                isflip = false;
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 movement = -speed;
                 ani.SetBool("run", true);
-
-                sr.flipX = true;
+                //旋轉整個物件的座標
+                transform.localScale = new Vector3(-1, 1, 1);
+                isflip = true;
             }
             else
             {
@@ -126,14 +140,86 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearVelocity = new Vector2(movement, jump);
                 ani.SetBool("jump", true);
-            }
+            }            
         }
+
         
     }
 
     private void Update()
     {
         HPbar.transform.localScale = new Vector3((float)HP / (float)max_hp, HPbar.transform.localScale.y, HPbar.transform.localScale.z);
+
+
+        // 按下 M 鍵攻擊+旋轉
+        if ((Input.GetKeyDown(KeyCode.M)||Input.GetMouseButtonDown(0)) && !rotatingToTarget && !turnback)
+        {
+            if (!isflip)
+            {
+                targetRotation = Quaternion.Euler(0, 0, -60);
+            }
+            else
+            {
+                targetRotation = Quaternion.Euler(0, 0, 60);
+            }
+            weapon.SetActive(true);
+            rotatingToTarget = true;
+
+        }   
+        if (rotatingToTarget)//平滑旋轉到目標角度
+        {
+            
+            weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+            // 當旋轉接近目標時，停止旋轉
+            if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
+            {
+                weapon.transform.rotation = targetRotation;
+                rotatingToTarget = false;
+                turnback = true;
+            }
+        }       
+        if (turnback)//轉回去
+        {
+
+            if (!isflip)
+            {
+                targetRotation = Quaternion.Euler(0, 0, -20);
+            }
+            else
+            {
+                targetRotation = Quaternion.Euler(0, 0, 20);
+            }
+
+            weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+            if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
+            {
+                weapon.transform.rotation = targetRotation;
+                turnback = false; // 完成回轉
+                weapon.SetActive(false);
+            }
+        }
+        //發射假牙
+        if ((Input.GetKeyDown(KeyCode.K)||Input.GetMouseButtonDown(1)) && !TeethControl.isthrow)
+        {
+            GameObject tooth = Instantiate(Falsetooth, transform.position, Quaternion.identity);
+
+            //改成用旋轉判定方向，而不是改 scale
+            if (transform.localScale.x < 0)
+            {
+                tooth.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                tooth.transform.rotation = Quaternion.identity;
+            }
+                
+
+            tooth.GetComponent<TeethControl>().player = this.transform;
+            TeethControl.isthrow = true;
+        }
+
     }
 
 
