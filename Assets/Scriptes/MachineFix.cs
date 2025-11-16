@@ -1,5 +1,6 @@
 using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MachineFix : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class MachineFix : MonoBehaviour
     public GameObject Fixtext;
     public GameObject FixOver;
     public bool isFixable = true; //¥i¥H­×²z
+    public Image FixBar;
 
     //ÁôÂÃ¦r
     public void HideText()
@@ -29,6 +31,7 @@ public class MachineFix : MonoBehaviour
         if (!isFixable) return;
         Fixtext.SetActive(false);
         isFixable = false;
+
     }
 
 }

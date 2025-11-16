@@ -56,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
     //機器修復
     MachineFix textfix;
     bool isFixing = false;
+    public Image CanvaFix;
+    public Image FixBar;
+    int FixProgess = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -311,8 +314,36 @@ public class PlayerMovement : MonoBehaviour
         if(textfix!=null)
         {
             textfix.StartFix();
+            CanvaFix.gameObject.SetActive(true);
+            FixBar.gameObject.SetActive(true);
         }
-        yield return new WaitForSeconds(3f);  // 修理時間 3 秒
+
+
+        HPbar.transform.localScale = new Vector3((float)HP / (float)max_hp, HPbar.transform.localScale.y, HPbar.transform.localScale.z);
+
+        float fixTime = 3f;   // 修理總時間
+        float currentFix = 0f; // 當前修理進度 0→fixTime
+
+        // 假設 FixBar 原本 scale.x = 0，最終 1
+        Vector3 startScale = FixBar.transform.localScale;
+        Vector3 endScale = new Vector3(1f, startScale.y, startScale.z);
+
+        while (currentFix < fixTime)
+        {
+            currentFix += Time.deltaTime;
+
+            // 直接用比例算 X 軸
+            float ratio = Mathf.Clamp01(currentFix / fixTime);
+            FixBar.transform.localScale = new Vector3(ratio, FixBar.transform.localScale.y, FixBar.transform.localScale.z);
+
+            yield return null;
+        }
+
+        // 確保最後填滿
+        FixBar.transform.localScale = endScale;
+
+        CanvaFix.gameObject.SetActive(false);
+        FixBar.gameObject.SetActive(false);
 
         // 恢復移動能力
         speed = oldSpeed;
