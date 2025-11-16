@@ -11,6 +11,10 @@ public class MonsterHit : MonoBehaviour
     public float noHitTime = 0.5f;
     bool noHit = false;
 
+    //移動設置
+    float startX;
+    public float moveRange = 1f; // 可在 Inspector 調整
+
     int hp = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +22,9 @@ public class MonsterHit : MonoBehaviour
         sr=GetComponent<SpriteRenderer>();
         rb=GetComponent<Rigidbody2D>();
         hp = 5;
+
+        // 記錄初始位置
+        startX = transform.position.x;
     }
 
 
@@ -58,12 +65,12 @@ public class MonsterHit : MonoBehaviour
         sr.flipX = true;
         transform.position += new Vector3(speed * direction * Time.deltaTime, 0, 0);
 
-        if (transform.position.x > 5f)
+        if (transform.position.x > startX + moveRange)
         {
             direction = -1;
             sr.flipX = false;
         }
-        else if (transform.position.x < 3f) {
+        else if (transform.position.x < startX - moveRange) {
             direction = 1;
             sr.flipX=true;
         }
