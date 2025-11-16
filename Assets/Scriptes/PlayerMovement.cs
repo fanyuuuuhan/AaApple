@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     //收集物件
     public int collection = 0;
+    public TextMeshProUGUI CollCount;
 
     //角色移動
     public float jump = 2f;
@@ -22,8 +25,8 @@ public class PlayerMovement : MonoBehaviour
     bool isGround = false;
 
     //血量
-    public int HP = 0;
-    int max_hp = 0;
+    int HP = 20;
+    public int max_hp = 0;
     public Image HPbar;
 
     //無敵時間設置
@@ -44,38 +47,88 @@ public class PlayerMovement : MonoBehaviour
 
     //丟假牙
     public GameObject Falsetooth;
-    
 
+    //踩到奶油滑滑控制
+    public float butterSpeed = 0.8f;
+    public float butterLerp = 1.5f;
+    bool isButter = false;
+
+    //機器修復
+    MachineFix textfix;
+    bool isFixing = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         rb= GetComponent<Rigidbody2D>();
         ani= GetComponent<Animator>();
         sr= GetComponent<SpriteRenderer>();
-        
+
         max_hp = 20;
         HP = max_hp;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
         {
             isGround = true;
             ani.SetBool("jump", false);
         }
+        //收集物件
         if (collision.tag == "bling")
         {
             Destroy(collision.gameObject);
             collection++;
+            CollCount.text = $"{collection:F0}";
+        }
+        //轉移場景
+        if (collision.CompareTag("AppleGo"))
+        {
+            Portal portal = collision.GetComponent<Portal>();
+            if (portal != null)
+            {
+                portal.SceneChange();
+                transform.position = new Vector3(-7, 6 , 0);
+            }
+        }
+        //奶油偵測
+        if (collision.CompareTag("Butter"))
+        {
+            isButter = true;
+        }
+        //機器偵測
+        if (collision.CompareTag("Machine"))
+        {
+            textfix = collision.GetComponent<MachineFix>();
+            if (textfix != null && textfix.isFixable) //MachineFix確認有啟動並且機器可以修理
+            {
+                Debug.Log("機器偵測");
+                textfix.ShowText();
+            }
+            else
+            {
+                textfix.FixOver.SetActive(true);
+            }
+            
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
         {
             isGround = false;
+        }
+        if (collision.CompareTag("Butter"))
+        {
+            isButter = false;
+        }
+        if (collision.CompareTag("Machine") && textfix != null)
+        {
+            Debug.Log("機器偵測離開");
+            textfix.HideText();
+            textfix = null;
         }
     }
 
@@ -134,7 +187,16 @@ public class PlayerMovement : MonoBehaviour
                 movement = 0f;
                 ani.SetBool("run", false);
             }
-            rb.linearVelocityX = movement;
+            if (!isButter)
+            {
+                rb.linearVelocityX = movement;
+            }
+            else
+            {
+                float target = movement * butterSpeed;
+                rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, target, Time.deltaTime * butterLerp); //平滑過度速度
+            }
+            
 
             if (Input.GetKey(KeyCode.Space) && isGround == true)
             {
@@ -146,81 +208,117 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private void Update()
+    void Update()
     {
         HPbar.transform.localScale = new Vector3((float)HP / (float)max_hp, HPbar.transform.localScale.y, HPbar.transform.localScale.z);
 
-
+        
+        //修理機器
+        if (textfix != null && textfix.isFixable && !isFixing)
+        {
+            if (Input.GetKeyDown(KeyCode.M) || Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine(FixMachine());//等待3秒、撥放修理動畫
+            }
+        }
         // 按下 M 鍵攻擊+旋轉
-        if ((Input.GetKeyDown(KeyCode.M)||Input.GetMouseButtonDown(0)) && !rotatingToTarget && !turnback)
+        else
         {
-            if (!isflip)
+            if ((Input.GetKeyDown(KeyCode.M) || Input.GetMouseButtonDown(0)) && !rotatingToTarget && !turnback)
             {
-                targetRotation = Quaternion.Euler(0, 0, -60);
-            }
-            else
-            {
-                targetRotation = Quaternion.Euler(0, 0, 60);
-            }
-            weapon.SetActive(true);
-            rotatingToTarget = true;
+                if (!isflip)
+                {
+                    targetRotation = Quaternion.Euler(0, 0, -60);
+                }
+                else
+                {
+                    targetRotation = Quaternion.Euler(0, 0, 60);
+                }
+                weapon.SetActive(true);
+                rotatingToTarget = true;
 
-        }   
-        if (rotatingToTarget)//平滑旋轉到目標角度
-        {
-            
-            weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            // 當旋轉接近目標時，停止旋轉
-            if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
-            {
-                weapon.transform.rotation = targetRotation;
-                rotatingToTarget = false;
-                turnback = true;
             }
-        }       
-        if (turnback)//轉回去
-        {
-
-            if (!isflip)
+            if (rotatingToTarget)//平滑旋轉到目標角度
             {
-                targetRotation = Quaternion.Euler(0, 0, -20);
+
+                weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+                // 當旋轉接近目標時，停止旋轉
+                if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
+                {
+                    weapon.transform.rotation = targetRotation;
+                    rotatingToTarget = false;
+                    turnback = true;
+                }
             }
-            else
+            if (turnback)//轉回去
             {
-                targetRotation = Quaternion.Euler(0, 0, 20);
+
+                if (!isflip)
+                {
+                    targetRotation = Quaternion.Euler(0, 0, -20);
+                }
+                else
+                {
+                    targetRotation = Quaternion.Euler(0, 0, 20);
+                }
+
+                weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+                if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
+                {
+                    weapon.transform.rotation = targetRotation;
+                    turnback = false; // 完成回轉
+                    weapon.SetActive(false);
+                }
             }
-
-            weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
+            //發射假牙
+            if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(1)) && !TeethControl.isthrow)
             {
-                weapon.transform.rotation = targetRotation;
-                turnback = false; // 完成回轉
-                weapon.SetActive(false);
+                GameObject tooth = Instantiate(Falsetooth, transform.position, Quaternion.identity);
+
+                //改成用旋轉判定方向，而不是改 scale
+                if (transform.localScale.x < 0)
+                {
+                    tooth.transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    tooth.transform.rotation = Quaternion.identity;
+                }
+
+
+                tooth.GetComponent<TeethControl>().player = this.transform;
+                TeethControl.isthrow = true;
             }
         }
-        //發射假牙
-        if ((Input.GetKeyDown(KeyCode.K)||Input.GetMouseButtonDown(1)) && !TeethControl.isthrow)
-        {
-            GameObject tooth = Instantiate(Falsetooth, transform.position, Quaternion.identity);
-
-            //改成用旋轉判定方向，而不是改 scale
-            if (transform.localScale.x < 0)
-            {
-                tooth.transform.rotation = Quaternion.Euler(0, 180, 0);
-            }
-            else
-            {
-                tooth.transform.rotation = Quaternion.identity;
-            }
-                
-
-            tooth.GetComponent<TeethControl>().player = this.transform;
-            TeethControl.isthrow = true;
-        }
+       
 
     }
 
 
+    IEnumerator FixMachine()
+    {
+        isFixing = true;
+
+        // 停止玩家所有控制
+        float oldSpeed = speed;
+        float oldJump = jump;
+        speed = 0;
+        jump = 0;
+        rb.linearVelocity = Vector2.zero;
+
+        if(textfix!=null)
+        {
+            textfix.StartFix();
+        }
+        yield return new WaitForSeconds(3f);  // 修理時間 3 秒
+
+        // 恢復移動能力
+        speed = oldSpeed;
+        jump = oldJump;
+
+        isFixing = false;
+        textfix.isFixable = false;
+    }
 }

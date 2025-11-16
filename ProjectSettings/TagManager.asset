@@ -9,6 +9,9 @@ TagManager:
   - Monster
   - closeAttack
   - farAttack
+  - AppleGo
+  - Butter
+  - Machine
   layers:
   - Default
   - TransparentFX
