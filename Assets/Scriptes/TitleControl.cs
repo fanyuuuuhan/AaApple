@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleControl : MonoBehaviour
 {
@@ -17,6 +18,6 @@ public class TitleControl : MonoBehaviour
     public void GameStart()
     {
         print("開始");
-        Application.LoadLevel("Game");
+        SceneManager.LoadScene("場景名稱");
     }
 }

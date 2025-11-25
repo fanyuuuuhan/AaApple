@@ -58,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
     bool isFixing = false;
     public Image CanvaFix;
     public Image FixBar;
-    int FixProgess = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
