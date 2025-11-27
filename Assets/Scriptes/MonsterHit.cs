@@ -7,8 +7,6 @@ public class MonsterHit : MonoBehaviour
     float direction = 1;
     float speed = 0.5f;
 
-    public Collider2D myHitCollider; // 連到 Box Collider
-
 
     //無敵時間設置
     public float noHitTime = 0.5f;
@@ -33,10 +31,8 @@ public class MonsterHit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        // 只對本 Collider 觸發受傷
-        if (coll != myHitCollider) return;
 
-        if (coll.CompareTag("closeAttack"))
+        if (coll.CompareTag("closeAttack") && coll.IsTouching(GetComponent<BoxCollider2D>()))
         {
             hp -= 3;
             print(hp);
@@ -45,7 +41,7 @@ public class MonsterHit : MonoBehaviour
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
         }
-        if (coll.CompareTag("farAttack"))
+        if (coll.CompareTag("farAttack") && coll.IsTouching(GetComponent<BoxCollider2D>()))
         {
             hp -= 2;
             print(hp);

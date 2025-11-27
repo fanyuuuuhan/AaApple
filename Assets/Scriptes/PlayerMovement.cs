@@ -115,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
+        
     }
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -136,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Monster"&&!noHit)
+        if ((coll.gameObject.tag == "Monster"|| coll.gameObject.tag == "MonsterFar" )&& !noHit)
         {
             print(coll.gameObject.name);
             HP -= 1;
@@ -150,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetKnock), knockTime);
             rb.linearVelocity = new Vector2((transform.position.x < coll.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
         }
+        
     }
 
     void ResetHit()
