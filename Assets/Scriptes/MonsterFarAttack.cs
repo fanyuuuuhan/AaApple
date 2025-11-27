@@ -8,7 +8,7 @@ public class MonsterFarAttack : MonoBehaviour
 
     public GameObject leaves;
     public Transform leavespoint; //子彈發射點
-    public float delayTime = 1.5f; //子彈發射間隔時間
+    public float delayTime = 1f; //子彈發射間隔時間
     public float speed = 2f; //子彈速度
     float timer;
     public static bool isPlayer = false;

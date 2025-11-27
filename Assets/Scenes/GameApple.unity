@@ -1332,7 +1332,7 @@ MonoBehaviour:
   player: {fileID: 5969445}
   leaves: {fileID: 4120818400102007706, guid: 8a4fd7e8173d2ca428a251ac5c24da7e, type: 3}
   leavespoint: {fileID: 151357698}
-  delayTime: 1.5
+  delayTime: 1
   speed: 5
 --- !u!58 &708955068
 CircleCollider2D:
