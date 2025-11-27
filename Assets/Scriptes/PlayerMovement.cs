@@ -115,6 +115,18 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
+        //怪物遠攻偵測
+        if (collision.CompareTag("MonsterFar"))
+        {
+            HP -= 1;
+            noHit = true;
+            Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+
+            //手傷害後反彈
+            isKnock = true;
+            Invoke(nameof(ResetKnock), knockTime);
+            rb.linearVelocity = new Vector2((transform.position.x < collision.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
+        }
         
     }
     void OnTriggerExit2D(Collider2D collision)
@@ -137,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if ((coll.gameObject.tag == "Monster"|| coll.gameObject.tag == "MonsterFar" )&& !noHit)
+        if (coll.gameObject.tag == "Monster"&& !noHit)
         {
             print(coll.gameObject.name);
             HP -= 1;
