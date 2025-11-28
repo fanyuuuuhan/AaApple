@@ -25,8 +25,8 @@ public class PlayerMovement : MonoBehaviour
     bool isGround = false;
 
     //血量
-    int HP = 20;
-    public int max_hp = 0;
+    int HP;
+    public int max_hp;
     public Image HPbar;
 
     //無敵時間設置
@@ -59,16 +59,30 @@ public class PlayerMovement : MonoBehaviour
     public Image CanvaFix;
     public Image FixBar;
 
+    void Awake()
+    {
+        // 避免場景切換生成多個 Player
+        if (GameObject.FindGameObjectsWithTag("Player").Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         rb= GetComponent<Rigidbody2D>();
         ani= GetComponent<Animator>();
         sr= GetComponent<SpriteRenderer>();
 
-        max_hp = 20;
-        HP = max_hp;
+        // 從 PlayerData 讀資料
+        HP = PlayerData.Instance.HP;
+        max_hp = PlayerData.Instance.maxHP;
+        collection = PlayerData.Instance.collection;
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -84,6 +98,8 @@ public class PlayerMovement : MonoBehaviour
             Destroy(collision.gameObject);
             collection++;
             CollCount.text = $"{collection:F0}";
+            PlayerData.Instance.collection = collection;
+
         }
         //轉移場景
         if (collision.CompareTag("AppleGo"))
@@ -119,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("MonsterFar"))
         {
             HP -= 1;
+            PlayerData.Instance.HP = HP;
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
 
@@ -153,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         {
             print(coll.gameObject.name);
             HP -= 1;
-            
+            PlayerData.Instance.HP = HP;
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
