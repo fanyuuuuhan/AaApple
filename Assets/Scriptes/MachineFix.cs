@@ -8,7 +8,6 @@ public class MachineFix : MonoBehaviour
     public GameObject Fixtext;
     public GameObject FixOver;
     public bool isFixable = true; //¥i¥H­×²z
-    public Image FixBar;
 
     //ÁôÂÃ¦r
     public void HideText()
