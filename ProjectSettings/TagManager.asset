@@ -13,6 +13,8 @@ TagManager:
   - Butter
   - Machine
   - MonsterFar
+  - Canvas
+  - Achievement
   layers:
   - Default
   - TransparentFX
