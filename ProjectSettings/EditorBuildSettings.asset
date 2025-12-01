@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameApple.unity
+    path: Assets/Scenes/Map.unity
+    guid: 1d1c0bc477782f844b7167ce6455ac37
+  - enabled: 1
+    path: Assets/Scenes/Init.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/GameApple.unity
+    guid: 6e86c863927ff604cbdfbb4827335a74
   - enabled: 1
     path: Assets/Scenes/AppleGo.unity
     guid: 1b4c7cdf9e0b69d4d84dfa5a9a01f1cf
-  - enabled: 1
-    path: Assets/Scenes/Map.unity
-    guid: 1d1c0bc477782f844b7167ce6455ac37
   - enabled: 1
     path: Assets/Scenes/GameButter.unity
     guid: 78add91b197998a45a5561ebb9b9c3dc

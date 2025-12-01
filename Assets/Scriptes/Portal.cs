@@ -3,20 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
+    public string AsceneName;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //this.transform.tag = "AppleGo";
+        //if (PlayerMovement.isPor)
+        //{
+        //    PlayerData.PorScene = AsceneName;
+        //    GameManager.Instance.SceneChange(AsceneName);
+        //    Debug.Log(AsceneName + "¤w½ò¨ì");
+        //    PlayerMovement.isPor = false;
+        //}
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void SceneChange()
-    {
-        SceneManager.LoadScene("AppleGo");
+        if (MonsterBossHit.bossdie)
+        {
+            Destroy(gameObject);
+        }
     }
 }

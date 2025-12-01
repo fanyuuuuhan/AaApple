@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -12,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer sr;
 
     //收集物件
-    public int collection = 0;
-    public TextMeshProUGUI CollCount;
+    public static int collection = 0;
+    public static TextMeshProUGUI CollCount;
 
     //角色移動
     public float jump = 2f;
@@ -25,9 +26,9 @@ public class PlayerMovement : MonoBehaviour
     bool isGround = false;
 
     //血量
-    int HP;
+    public int HP;
     public int max_hp;
-    public Image HPbar;
+    public static Image HPbar;
 
     //無敵時間設置
     public float noHitTime = 0.5f;
@@ -57,19 +58,13 @@ public class PlayerMovement : MonoBehaviour
     MachineFix textfix;
     bool isFixing = false;
     public Image CanvaFix;
-    public Image FixBar;
+    public static Image FixBar;
 
-    void Awake()
-    {
-        // 避免場景切換生成多個 Player
-        if (GameObject.FindGameObjectsWithTag("Player").Length > 1)
-        {
-            Destroy(gameObject);
-            return;
-        }
+    //偵測是否踩到傳送點
+    public static bool isPor = false;
 
-        DontDestroyOnLoad(gameObject);
-    }
+    //成就拿取
+    public static bool isAch = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -78,11 +73,9 @@ public class PlayerMovement : MonoBehaviour
         ani= GetComponent<Animator>();
         sr= GetComponent<SpriteRenderer>();
 
-        // 從 PlayerData 讀資料
-        HP = PlayerData.Instance.HP;
-        max_hp = PlayerData.Instance.maxHP;
-        collection = PlayerData.Instance.collection;
-
+        HP = InitPlayer.HP;
+        max_hp = InitPlayer.maxHP;
+        collection = InitPlayer.collection;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -98,17 +91,17 @@ public class PlayerMovement : MonoBehaviour
             Destroy(collision.gameObject);
             collection++;
             CollCount.text = $"{collection:F0}";
-            PlayerData.Instance.collection = collection;
-
         }
         //轉移場景
         if (collision.CompareTag("AppleGo"))
         {
             Portal portal = collision.GetComponent<Portal>();
+            isPor = true;
+            PlayerData.BackScene = SceneManager.GetActiveScene().name;
             if (portal != null)
             {
-                portal.SceneChange();
-                transform.position = new Vector3(-7, 6 , 0);
+                GameManager.Instance.SceneChange(portal.AsceneName);
+                transform.position = new Vector3(-7, 6, 0);
             }
         }
         //奶油偵測
@@ -135,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("MonsterFar"))
         {
             HP -= 1;
-            PlayerData.Instance.HP = HP;
+
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
 
@@ -143,6 +136,14 @@ public class PlayerMovement : MonoBehaviour
             isKnock = true;
             Invoke(nameof(ResetKnock), knockTime);
             rb.linearVelocity = new Vector2((transform.position.x < collision.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
+        }
+        //成就偵測
+        if (collision.CompareTag("Achievement"))
+        {
+            isAch = true;
+            GameManager.Instance.SceneChange(PlayerData.BackScene);
+            transform.position = new Vector3(10, -3, 0);
+            PlayerData.BackScene = "";
         }
         
     }
@@ -170,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         {
             print(coll.gameObject.name);
             HP -= 1;
-            PlayerData.Instance.HP = HP;
+
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -241,8 +242,11 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    
+
     void Update()
     {
+        if(HPbar!=null)
         HPbar.transform.localScale = new Vector3((float)HP / (float)max_hp, HPbar.transform.localScale.y, HPbar.transform.localScale.z);
 
         

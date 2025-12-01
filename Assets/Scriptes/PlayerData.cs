@@ -2,24 +2,10 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public static PlayerData Instance;
+    public static string NextSceneName = ""; //Map時的場景
+    public static string RestartScene = "";   // Restart 時要回的場景
+    public static string PorScene = ""; //傳送的場景
+    public static string NowScene = ""; //Map返回
+    public static string BackScene = "";
 
-    public int HP = 20;
-    public int maxHP = 20;
-    public int collection = 0;
-
-    public Vector3 lastPosition;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 }

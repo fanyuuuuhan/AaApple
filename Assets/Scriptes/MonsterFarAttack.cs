@@ -1,24 +1,29 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class MonsterFarAttack : MonoBehaviour
 {
     
     public Transform player;
 
-    public GameObject leaves;
-    public Transform leavespoint; //子彈發射點
+    public GameObject Bullet;
+    public Transform Bulletpoint; //子彈發射點
     public float delayTime = 1f; //子彈發射間隔時間
     public float speed = 2f; //子彈速度
     float timer;
     public static bool isPlayer = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    IEnumerator Start()
     {
-        //追蹤角色位置
+        // 等待 Player 生成
+        while (GameObject.FindGameObjectWithTag("Player") == null)
+        {
+            yield return null;
+        }
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
+
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,7 +49,7 @@ public class MonsterFarAttack : MonoBehaviour
         if (isPlayer)
         {
             //計算角色方位
-            Vector3 dir = (player.position - leavespoint.position).normalized;
+            Vector3 dir = (player.position - Bulletpoint.position).normalized;
 
             // 轉向玩家
             float angle = Mathf.Atan2(dir.y, dir.z) * Mathf.Rad2Deg;  //Atan計算「方向向量的角度」，Rad2Deg弧度 → 角度 的轉換縮放
@@ -56,7 +61,7 @@ public class MonsterFarAttack : MonoBehaviour
             {
                 timer = 0;
 
-                GameObject bullet = Instantiate(leaves, leavespoint.position, Quaternion.identity);
+                GameObject bullet = Instantiate(Bullet, Bulletpoint.position, Quaternion.identity);
                 bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * speed; //dir=方向
             }
         }

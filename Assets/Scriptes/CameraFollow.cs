@@ -17,6 +17,7 @@ public class CameraFollow : MonoBehaviour
         Camera cam = GetComponent<Camera>();
         halfHeight = cam.orthographicSize;
         halfWidth = halfHeight * cam.aspect;
+        target = GameManager.Instance.Player.transform;
     }
 
     void LateUpdate()

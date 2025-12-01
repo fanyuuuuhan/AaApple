@@ -20,14 +20,9 @@ public class MapUIClickHandler : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData) //헕을㉵τ
     {
-        if (Application.CanStreamedLevelBeLoaded(sceneName))
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        else
-        {
-            Debug.LogWarning("놓뉴ㄳ쫟쫇: " + sceneName);
-        }
+        PlayerData.NextSceneName = sceneName;
+
+        SceneManager.LoadScene("Init");
     }
 
     void Update()
