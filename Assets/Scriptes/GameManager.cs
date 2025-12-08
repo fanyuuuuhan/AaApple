@@ -36,28 +36,21 @@ public class GameManager : MonoBehaviour
         PlayerUI = Instantiate(PlayerUIPrefab);
 
         // 確保你的 PlayerUI Prefab 中有這些路徑和組件
-        Transform hpBarTransform = PlayerUI.transform.Find("Image-HP/HPbar");
-        Transform fixBarTransform = PlayerUI.transform.Find("FixBar");
+        PlayerMovement pm = Player.GetComponent<PlayerMovement>();
+
+        // 抓 HeartHp
+        HeartHp heartHp = PlayerUI.GetComponentInChildren<HeartHp>();
+        
         // 請確認你的收集物 TextMeshProUGUI 的路徑
         Transform collCountTextTransform = PlayerUI.transform.Find("CollectionCount");
 
-        if (hpBarTransform != null)
+        if (heartHp != null)
         {
-            PlayerMovement.HPbar = hpBarTransform.GetComponent<Image>();
-        }
-        if (fixBarTransform != null)
-        {
-            PlayerMovement.FixBar = fixBarTransform.GetComponent<Image>();
+            pm.HeartHp = heartHp;
         }
         if (collCountTextTransform != null)
         {
             PlayerMovement.CollCount = collCountTextTransform.GetComponent<TextMeshProUGUI>();
-        }
-
-        // 檢查 UI 是否成功連接
-        if (PlayerMovement.HPbar == null || PlayerMovement.CollCount == null)
-        {
-            Debug.LogError("UI 連接失敗！請檢查 PlayerUIPrefab 裡的組件路徑是否正確。");
         }
 
         DontDestroyOnLoad(Player);
@@ -82,6 +75,26 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
         
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 當場景是你要播放跑步進場的場景
+        if (scene.name == "GameApple")
+        {
+            PlayerMovement pm = Player.GetComponent<PlayerMovement>();
+            pm.PlayEnterAnimation();   //呼叫入場動畫
+        }
     }
 
 

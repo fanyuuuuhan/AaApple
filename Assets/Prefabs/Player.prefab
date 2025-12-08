@@ -196,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 5651070218686248367}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -1.5, z: 0}
+  m_LocalPosition: {x: 363.6683, y: 1022.67004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -339,11 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9846a0bff79cd64585a16bd43c53312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollCount: {fileID: 0}
   jump: 8
   speed: 2
-  HP: 0
   max_hp: 20
+  HeartHp: {fileID: 0}
   noHitTime: 0.5
   knockback: 3
   knockTime: 0.5
@@ -353,6 +352,7 @@ MonoBehaviour:
   butterSpeed: 0.8
   butterLerp: 1.5
   CanvaFix: {fileID: 0}
+  enterTime: 3
 --- !u!50 &4018818071378840763
 Rigidbody2D:
   serializedVersion: 5
@@ -365,7 +365,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 15
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
