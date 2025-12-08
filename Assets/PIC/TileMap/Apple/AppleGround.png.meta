@@ -1,0 +1,419 @@
+fileFormatVersion: 2
+guid: 1da70931822ba964dac29ae32f91cd77
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2241068088510090700
+    second: AppleGround_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 185
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AppleGround_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd8b158d8fd91f10800000000000000
+      internalID: 2241068088510090700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_1
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e20bd22874aae44fb0db7b8f9e44aa7
+      internalID: -1839568612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_2
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c05268a8ce6ad4cab939ff79bedebc
+      internalID: -459206884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_3
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb8f94ff0084dae4888306fabd24de88
+      internalID: -847218716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_4
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: bef4f7b61b3584d45b4d0ed684512bfa
+      internalID: -1138229857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_5
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52a57b9de1669f941ae02186f8e4531c
+      internalID: 1187670181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_6
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89a5d5abe6541ac48b1416afae97debd
+      internalID: -668147260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_7
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12b3dae4b8aaa88468fcc72d21833f03
+      internalID: -1869750822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_8
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fc875344a8650644b3919cc1fe9092d
+      internalID: 345243925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_9
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8937443746cde724c9ecec54a41aecda
+      internalID: 450330810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AppleGround_10
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 0
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 92.5, y: 35.5}
+        - {x: -92.5, y: 35.5}
+        - {x: -92.5, y: -92.5}
+        - {x: 92.5, y: -92.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e97544f735391d44eadc6cee2ebbc3a9
+      internalID: -583871471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7645b6291a125474cb1c80f1928d52c9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":185.0,"y":185.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      AppleGround_0: 2241068088510090700
+      AppleGround_1: -1839568612
+      AppleGround_10: -583871471
+      AppleGround_2: -459206884
+      AppleGround_3: -847218716
+      AppleGround_4: -1138229857
+      AppleGround_5: 1187670181
+      AppleGround_6: -668147260
+      AppleGround_7: -1869750822
+      AppleGround_8: 345243925
+      AppleGround_9: 450330810
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

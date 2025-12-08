@@ -4,6 +4,7 @@ public class MonsterHit : MonoBehaviour
 {
     Rigidbody2D rb;
     SpriteRenderer sr;
+    Animator ani;
     float direction = 1;
     float speed = 0.5f;
 
@@ -22,6 +23,7 @@ public class MonsterHit : MonoBehaviour
     {
         sr=GetComponent<SpriteRenderer>();
         rb=GetComponent<Rigidbody2D>();
+        ani = GetComponent<Animator>();
         hp = 5;
 
         // 記錄初始位置
@@ -37,6 +39,7 @@ public class MonsterHit : MonoBehaviour
             hp -= 3;
             print(hp);
             Debug.Log("怪物-3");
+            ani.SetBool("move", false);
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -45,12 +48,14 @@ public class MonsterHit : MonoBehaviour
         {
             hp -= 2;
             print(hp);
+            ani.SetBool("move", false);
 
             Debug.Log("怪物-2");
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
         }
     }
+
 
     void ResetHit()
     {
@@ -60,23 +65,24 @@ public class MonsterHit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ani.SetBool("move", true);
+
 
         if (hp <= 0)
         {
             Destroy(this.gameObject);
         }
 
-        sr.flipX = true;
-        transform.position += new Vector3(speed * direction * Time.deltaTime, 0, 0);
+        transform.position += new Vector3(-speed * direction * Time.deltaTime, 0, 0);
 
         if (transform.position.x > startX + moveRange)
         {
-            direction = -1;
+            direction = 1;
             sr.flipX = false;
         }
         else if (transform.position.x < startX - moveRange) {
-            direction = 1;
-            sr.flipX=true;
+            direction = -1;
+            sr.flipX = true;
         }
 
         

@@ -26,9 +26,9 @@ public class PlayerMovement : MonoBehaviour
     bool isGround = false;
 
     //血量
-    public int HP;
+    public static int HP;
     public int max_hp;
-    public static Image HPbar;
+    public HeartHp HeartHp;
 
     //無敵時間設置
     public float noHitTime = 0.5f;
@@ -58,13 +58,18 @@ public class PlayerMovement : MonoBehaviour
     MachineFix textfix;
     bool isFixing = false;
     public Image CanvaFix;
-    public static Image FixBar;
+    public Image FixBar;
 
     //偵測是否踩到傳送點
     public static bool isPor = false;
 
     //成就拿取
     public static bool isAch = false;
+
+    //跑步進入動畫
+    bool isEnter = false;
+    float timer = 0f;
+    public float enterTime = 1.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -76,6 +81,39 @@ public class PlayerMovement : MonoBehaviour
         HP = InitPlayer.HP;
         max_hp = InitPlayer.maxHP;
         collection = InitPlayer.collection;
+
+        if (HeartHp != null)
+            HeartHp.UpdateHearts(HP, max_hp);
+    }
+
+    public void PlayEnterAnimation()
+    {
+        isEnter = true;
+        timer = 0;
+        StartCoroutine(EnterScene());
+    }
+
+    IEnumerator EnterScene()
+    {
+        // 播放跑步動畫
+        ani.Play("Run");
+
+        // 自動向右跑秒（可更動）       
+        while (timer < enterTime)
+        {
+            rb.linearVelocity = new Vector2(speed, rb.linearVelocity.y);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // 入場結束：停止移動
+        rb.linearVelocity = Vector2.zero;
+
+        // 改為待機動畫
+        ani.Play("idle0");
+
+        // 啟用玩家操作
+        isEnter = false;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -96,6 +134,14 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("AppleGo"))
         {
             Portal portal = collision.GetComponent<Portal>();
+
+            // 暫停計時器
+            PlayerData.TimerPaused = true;
+
+            // 記錄目前時間（Timer OnDestroy()會做，不過這裡再做一次保險）
+            PlayerData.PauseTimeS = FindFirstObjectByType<Timer>().GetNowTimeS();
+            PlayerData.PauseTimeM = FindFirstObjectByType<Timer>().GetNowTimeM();
+
             isPor = true;
             PlayerData.BackScene = SceneManager.GetActiveScene().name;
             if (portal != null)
@@ -127,7 +173,19 @@ public class PlayerMovement : MonoBehaviour
         //怪物遠攻偵測
         if (collision.CompareTag("MonsterFar"))
         {
-            HP -= 1;
+            TakeHit(1);
+
+            noHit = true;
+            Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+
+            //手傷害後反彈
+            isKnock = true;
+            Invoke(nameof(ResetKnock), knockTime);
+            rb.linearVelocity = new Vector2((transform.position.x < collision.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
+        }
+        if (collision.CompareTag("BossHit"))
+        {
+            TakeHit(4);
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -170,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         if (coll.gameObject.tag == "Monster"&& !noHit)
         {
             print(coll.gameObject.name);
-            HP -= 1;
+            TakeHit(1);
 
 
             noHit = true;
@@ -197,6 +255,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isEnter)
+        {
+            return;
+        }
 
         if (!isKnock)
         {
@@ -246,8 +308,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(HPbar!=null)
-        HPbar.transform.localScale = new Vector3((float)HP / (float)max_hp, HPbar.transform.localScale.y, HPbar.transform.localScale.z);
+        if (isEnter)
+        {
+            return;
+        }
 
         
         //修理機器
@@ -333,6 +397,17 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void TakeHit(int dmg)
+    {
+        HP -= dmg;
+        if (HP < 0)
+        {
+            HP = 0;
+        }
+        if (HeartHp != null)
+            HeartHp.UpdateHearts(HP, max_hp);
+    }
+
 
     IEnumerator FixMachine()
     {
@@ -351,9 +426,6 @@ public class PlayerMovement : MonoBehaviour
             CanvaFix.gameObject.SetActive(true);
             FixBar.gameObject.SetActive(true);
         }
-
-
-        HPbar.transform.localScale = new Vector3((float)HP / (float)max_hp, HPbar.transform.localScale.y, HPbar.transform.localScale.z);
 
         float fixTime = 3f;   // 修理總時間
         float currentFix = 0f; // 當前修理進度 0→fixTime

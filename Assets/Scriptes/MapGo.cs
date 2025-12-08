@@ -22,7 +22,19 @@ public class MapUIClickHandler : MonoBehaviour,
     {
         PlayerData.NextSceneName = sceneName;
 
-        SceneManager.LoadScene("Init");
+        if (sceneName == "GameApple")
+        {
+            SceneManager.LoadScene("Init");
+        }
+        if (sceneName == "GameSugar")
+        {
+            SceneManager.LoadScene("Init2");
+        }
+        if (sceneName == "GameButter")
+        {
+            SceneManager.LoadScene("Init3");
+        }
+
     }
 
     void Update()

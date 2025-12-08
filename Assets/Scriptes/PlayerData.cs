@@ -8,4 +8,9 @@ public class PlayerData : MonoBehaviour
     public static string NowScene = ""; //Map返回
     public static string BackScene = "";
 
+    //計時器
+    public static float PauseTimeS = 0;
+    public static float PauseTimeM = 0;
+    public static bool TimerPaused = false;
+
 }

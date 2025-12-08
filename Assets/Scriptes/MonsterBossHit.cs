@@ -22,8 +22,9 @@ public class MonsterBossHit : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D coll)
+    void OnTriggerEnter2D(Collider2D coll)
     {
+        if (noHit) return;   // ¡ö ¥²¥[¡I
 
         if ((coll.CompareTag("closeAttack")|| coll.CompareTag("farAttack")) && coll.IsTouching(GetComponent<BoxCollider2D>()))
         {
@@ -47,8 +48,9 @@ public class MonsterBossHit : MonoBehaviour
 
         if (hp <= 0)
         {
-            Destroy(this.gameObject);
             bossdie = true;
+            Destroy(this.gameObject);
+            
         }
 
     }

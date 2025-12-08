@@ -60,23 +60,17 @@ public class ESC : MonoBehaviour
             PlayerMovement pm = GameManager.Instance.Player.GetComponent<PlayerMovement>();
             if (pm != null)
             {
-                pm.HP = InitPlayer.HP;
+                PlayerMovement.HP = InitPlayer.HP;
                 pm.max_hp = InitPlayer.maxHP;
                 PlayerMovement.collection = InitPlayer.collection;
 
-                //重設 UI 顯示
-                if (PlayerMovement.HPbar != null)
-                {
-                    PlayerMovement.HPbar.transform.localScale =
-                        new Vector3(1f,
-                        PlayerMovement.HPbar.transform.localScale.y,
-                        PlayerMovement.HPbar.transform.localScale.z);
-                }
+                //正確重設愛心血量
+                if (pm.HeartHp != null)
+                    pm.HeartHp.UpdateHearts(PlayerMovement.HP, pm.max_hp);
 
+                //重設收集物
                 if (PlayerMovement.CollCount != null)
-                {
                     PlayerMovement.CollCount.text = "0";
-                }
             }
         }
 
@@ -86,7 +80,6 @@ public class ESC : MonoBehaviour
     public void Setting()
     {
         setting.gameObject.SetActive(true);
-
     }
 
     public void BackMap()
@@ -104,26 +97,25 @@ public class ESC : MonoBehaviour
             PlayerMovement pm = GameManager.Instance.Player.GetComponent<PlayerMovement>();
             if (pm != null)
             {
-                pm.HP = InitPlayer.HP;
+                PlayerMovement.HP = InitPlayer.HP;
                 pm.max_hp = InitPlayer.maxHP;
                 PlayerMovement.collection = InitPlayer.collection;
 
-                //重設 UI 顯示
-                if (PlayerMovement.HPbar != null)
-                {
-                    PlayerMovement.HPbar.transform.localScale =
-                        new Vector3(1f,
-                        PlayerMovement.HPbar.transform.localScale.y,
-                        PlayerMovement.HPbar.transform.localScale.z);
-                }
+                //正確重設愛心血量
+                if (pm.HeartHp != null)
+                    pm.HeartHp.UpdateHearts(PlayerMovement.HP, pm.max_hp);
 
+                //重設收集物
                 if (PlayerMovement.CollCount != null)
-                {
                     PlayerMovement.CollCount.text = "0";
-                }
             }
         }
 
         Destroy(eSC);
+    }
+
+    public void CloseSetting()
+    {
+        setting.gameObject.SetActive(false);
     }
 }

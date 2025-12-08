@@ -15,6 +15,7 @@ TagManager:
   - MonsterFar
   - Canvas
   - Achievement
+  - BossHit
   layers:
   - Default
   - TransparentFX
