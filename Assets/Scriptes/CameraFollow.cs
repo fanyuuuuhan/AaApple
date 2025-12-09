@@ -11,6 +11,9 @@ public class CameraFollow : MonoBehaviour
     private float halfHeight;
     private float halfWidth;
 
+    //原始Y位
+    private float originalY;
+
 
     void Start()
     {
@@ -18,6 +21,7 @@ public class CameraFollow : MonoBehaviour
         halfHeight = cam.orthographicSize;
         halfWidth = halfHeight * cam.aspect;
         target = GameManager.Instance.Player.transform;
+        originalY = transform.position.y;
     }
 
     void LateUpdate()
@@ -27,8 +31,12 @@ public class CameraFollow : MonoBehaviour
         // 目標位置
         Vector3 desiredPosition = target.position + offset;
 
-        // 只沿 X 軸移動（平行卷軸）
-        desiredPosition.y = transform.position.y;
+        // ★ 玩家 Y < 5 → 攝影機 Y 回到初始值 originalY
+        if (target.position.y < 5)
+        {
+            desiredPosition.y = originalY;
+        }
+
         desiredPosition.z = transform.position.z;
 
         // 平滑移動
