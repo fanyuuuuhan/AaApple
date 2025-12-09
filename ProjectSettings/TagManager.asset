@@ -16,6 +16,7 @@ TagManager:
   - Canvas
   - Achievement
   - BossHit
+  - FarMonster
   layers:
   - Default
   - TransparentFX

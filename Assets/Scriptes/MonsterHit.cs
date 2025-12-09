@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class MonsterHit : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class MonsterHit : MonoBehaviour
     float startX;
     public float moveRange = 1f; // 可在 Inspector 調整
 
+    //停頓判斷
+    public float stopDuration = 1f;  // 停頓時間
+    bool isMoving = false;
+
     int hp = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,6 +33,27 @@ public class MonsterHit : MonoBehaviour
 
         // 記錄初始位置
         startX = transform.position.x;
+        
+        //停頓動畫
+        StartCoroutine(MoveWithPause());
+    }
+
+    IEnumerator MoveWithPause()
+    {
+        while (true)
+        {
+            // 停頓 1 秒
+            isMoving = false;
+            ani.SetBool("move", false);
+            yield return new WaitForSeconds(stopDuration);
+
+            // 移動 2 秒（可自由調整）
+            isMoving = true;
+            ani.SetBool("move", true);
+            yield return new WaitForSeconds(2f);
+
+            
+        }
     }
 
 
@@ -73,17 +99,25 @@ public class MonsterHit : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        transform.position += new Vector3(-speed * direction * Time.deltaTime, 0, 0);
+        if (!isMoving) return;
 
-        if (transform.position.x > startX + moveRange)
+       
+        if (CompareTag("FarMonster"))
         {
-            direction = 1;
-            sr.flipX = false;
+            
+            transform.position += new Vector3(-speed * direction * Time.deltaTime, 0, 0);
+            if (transform.position.x > startX + moveRange)
+            {
+                direction = 1;
+                sr.flipX = false;
+            }
+            else if (transform.position.x < startX - moveRange)
+            {
+                direction = -1;
+                sr.flipX = true;
+            }
         }
-        else if (transform.position.x < startX - moveRange) {
-            direction = -1;
-            sr.flipX = true;
-        }
+        
 
         
     }
