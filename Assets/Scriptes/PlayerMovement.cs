@@ -71,6 +71,9 @@ public class PlayerMovement : MonoBehaviour
     float timer = 0f;
     public float enterTime = 1.5f;
 
+    //結束遊戲
+    public static bool isEndStar = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -86,17 +89,17 @@ public class PlayerMovement : MonoBehaviour
             HeartHp.UpdateHearts(HP, max_hp);
     }
 
+    //進場動畫
     public void PlayEnterAnimation()
     {
         isEnter = true;
         timer = 0;
         StartCoroutine(EnterScene());
     }
-
     IEnumerator EnterScene()
     {
         // 播放跑步動畫
-        ani.Play("Run");
+        ani.SetBool("run", true);
 
         // 自動向右跑秒（可更動）       
         while (timer < enterTime)
@@ -118,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        //踩地
         if (collision.CompareTag("Ground"))
         {
             isGround = true;
@@ -183,6 +187,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetKnock), knockTime);
             rb.linearVelocity = new Vector2((transform.position.x < collision.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
         }
+        //BOSS攻擊
         if (collision.CompareTag("BossHit"))
         {
             TakeHit(4);
@@ -200,10 +205,15 @@ public class PlayerMovement : MonoBehaviour
         {
             isAch = true;
             GameManager.Instance.SceneChange(PlayerData.BackScene);
-            transform.position = new Vector3(10, -3, 0);
+            transform.position = new Vector3(90, -3, 0);
             PlayerData.BackScene = "";
         }
-        
+        //遊戲結束檢查
+        if (collision.CompareTag("EndLine"))
+        {
+            isEnter= true;
+            isEndStar = true;
+        }
     }
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -225,6 +235,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        //小怪碰觸受傷
         if (coll.gameObject.tag == "Monster"&& !noHit)
         {
             print(coll.gameObject.name);
@@ -246,7 +257,6 @@ public class PlayerMovement : MonoBehaviour
     {
         noHit = false;
     }
-
     void ResetKnock()
     {
         isKnock = false;
@@ -260,6 +270,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        //按鍵移動
         if (!isKnock)
         {
             if (Input.GetKey(KeyCode.D))
@@ -300,8 +311,7 @@ public class PlayerMovement : MonoBehaviour
                 ani.SetBool("jump", true);
             }            
         }
-
-        
+   
     }
 
     
@@ -393,8 +403,6 @@ public class PlayerMovement : MonoBehaviour
                 TeethControl.isthrow = true;
             }
         }
-       
-
     }
 
     public void TakeHit(int dmg)
@@ -408,7 +416,7 @@ public class PlayerMovement : MonoBehaviour
             HeartHp.UpdateHearts(HP, max_hp);
     }
 
-
+    //修理機器
     IEnumerator FixMachine()
     {
         isFixing = true;

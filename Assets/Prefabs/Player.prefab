@@ -196,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 5651070218686248367}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 363.6683, y: 1022.67004, z: 0}
+  m_LocalPosition: {x: 18.934454, y: -3.9737039, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -315,7 +315,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.032217026, y: -0.08256245}
+  m_Offset: {x: -0.032217026, y: 0.040501297}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -325,7 +325,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.3966627, y: 0.4736843}
+  m_Size: {x: 0.3966627, y: 0.7198118}
   m_EdgeRadius: 0
 --- !u!114 &6186646637212810345
 MonoBehaviour:
@@ -352,6 +352,7 @@ MonoBehaviour:
   butterSpeed: 0.8
   butterLerp: 1.5
   CanvaFix: {fileID: 0}
+  FixBar: {fileID: 0}
   enterTime: 3
 --- !u!50 &4018818071378840763
 Rigidbody2D:
@@ -365,7 +366,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 15
+  m_Mass: 25
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1

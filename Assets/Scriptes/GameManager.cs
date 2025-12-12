@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerPrefab;
     public GameObject PlayerUIPrefab;
 
-    
-
     private void Awake()
     {
         if (Instance == null)
@@ -28,9 +26,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
+
         // --- (初始化與保護物件) ---
         Player = Instantiate(PlayerPrefab);
         PlayerUI = Instantiate(PlayerUIPrefab);
@@ -57,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (InitPlayer.isBackMap)
@@ -90,7 +89,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 當場景是你要播放跑步進場的場景
-        if (scene.name == "GameApple")
+        if (scene.name == "GameApple" && !MonsterBossHit.bossdie)
         {
             PlayerMovement pm = Player.GetComponent<PlayerMovement>();
             pm.PlayEnterAnimation();   //呼叫入場動畫

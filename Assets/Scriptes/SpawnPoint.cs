@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    private void Awake()
+    void Awake()
     {
         // 找到玩家，把他移到這個位置
         if (!MonsterBossHit.bossdie)

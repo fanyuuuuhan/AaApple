@@ -5,10 +5,12 @@ public class ESC : MonoBehaviour
 {
     public GameObject eSC;
     public GameObject setting;
+    public GameObject EndStar;
     public static bool isRestart = false;
 
     private void Awake()
     {
+        EndStar.gameObject.SetActive(false);
     }
 
     void Start()
@@ -46,7 +48,9 @@ public class ESC : MonoBehaviour
     {
         isRestart = true;
         eSC.gameObject.SetActive(false);
+        EndStar.gameObject.SetActive(false);
         Time.timeScale = 1f;
+        MonsterBossHit.bossdie = false;
         
         PlayerData.RestartScene = SceneManager.GetActiveScene().name;
         Debug.Log("Restart¡G°O¿ýªº RestartScene = " + PlayerData.RestartScene);
@@ -54,6 +58,13 @@ public class ESC : MonoBehaviour
         InitPlayer.HP = 20;
         InitPlayer.maxHP = 20;
         InitPlayer.collection = 0;
+        Timer.nowTimeS = 0;
+        Timer.nowTimeM = 0;
+        Timer.Stimer = 0;
+        Timer.Mtimer = 0;
+        PlayerData.TimerPaused = false;
+        PlayerMovement.isEndStar = false;
+        IsMonsterDie.isDie = false;
 
         if (GameManager.Instance != null && GameManager.Instance.Player != null)
         {
@@ -87,11 +98,21 @@ public class ESC : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Map");
         eSC.gameObject.SetActive(false);
+        EndStar.gameObject.SetActive(false);
+        PlayerMovement.isEndStar = false;
+        MonsterBossHit.bossdie = false;
+        IsMonsterDie.isDie = false;
+
 
         //­«¸mUI
         InitPlayer.HP = 20;
         InitPlayer.maxHP = 20;
         InitPlayer.collection = 0;
+        Timer.nowTimeS = 0;
+        Timer.nowTimeM = 0;
+        Timer.Stimer = 0;
+        Timer.Mtimer = 0;
+        PlayerData.TimerPaused = false;
         if (GameManager.Instance != null && GameManager.Instance.Player != null)
         {
             PlayerMovement pm = GameManager.Instance.Player.GetComponent<PlayerMovement>();
@@ -111,6 +132,7 @@ public class ESC : MonoBehaviour
             }
         }
 
+        //Destroy(GameManager.Instance.PlayerUI);
         Destroy(eSC);
     }
 

@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 public class MonsterHit : MonoBehaviour
 {
@@ -22,8 +23,12 @@ public class MonsterHit : MonoBehaviour
     public float stopDuration = 1f;  // 停頓時間
     bool isMoving = false;
 
+    //特定怪物顯示傳送門
+    public GameObject Portal;
+    public bool controlsPortal = false; // 是否控制 Portal
+
     int hp = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         sr=GetComponent<SpriteRenderer>();
@@ -38,6 +43,7 @@ public class MonsterHit : MonoBehaviour
         StartCoroutine(MoveWithPause());
     }
 
+    //行走停頓
     IEnumerator MoveWithPause()
     {
         while (true)
@@ -96,6 +102,8 @@ public class MonsterHit : MonoBehaviour
 
         if (hp <= 0)
         {
+            if (controlsPortal && Portal != null)
+                Portal.SetActive(true);
             Destroy(this.gameObject);
         }
 
