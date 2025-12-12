@@ -17,6 +17,9 @@ TagManager:
   - Achievement
   - BossHit
   - FarMonster
+  - DeadLine
+  - EndLine
+  - EndTimeStar
   layers:
   - Default
   - TransparentFX

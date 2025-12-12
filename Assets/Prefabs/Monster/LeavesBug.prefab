@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3212543355591051402}
+  - component: {fileID: 8712774753440001625}
+  - component: {fileID: 6378672622454765959}
   m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -31,6 +33,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1675677442122630990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8712774753440001625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966934436145005050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041e75b5b2949e04295a75e156e87d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 195309230875390044, guid: 5098eecf178902d4b8d101c673bcc206, type: 3}
+  Bullet: {fileID: 130073518088938008, guid: b7bc3d95f6588fe4486f0de11b198e9e, type: 3}
+  Bulletpoint: {fileID: 3212543355591051402}
+  delayTime: 0.8
+  speed: 3
+--- !u!58 &6378672622454765959
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966934436145005050}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 5
 --- !u!1 &2187187501213164826
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,6 +100,7 @@ GameObject:
   - component: {fileID: 5441379413604812880}
   - component: {fileID: 6488916739302874760}
   - component: {fileID: 5846588766300035261}
+  - component: {fileID: 56094875200914028}
   m_Layer: 0
   m_Name: LeavesBug
   m_TagString: FarMonster
@@ -60,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2187187501213164826}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.39005, y: -3.67882, z: 0}
   m_LocalScale: {x: 0.5477, y: 0.5477, z: 0.5477}
   m_ConstrainProportionsScale: 0
@@ -233,4 +289,16 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &56094875200914028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187187501213164826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270d81c5a63baa249abf8e8fae035273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

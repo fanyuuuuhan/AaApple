@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MonsterBossHit : MonoBehaviour
 {
-
+    public GameObject Achievement;
 
     //無敵時間設置
     public float noHitTime = 0.5f;
@@ -26,7 +26,7 @@ public class MonsterBossHit : MonoBehaviour
     {
         if (noHit) return;   // ← 必加！
 
-        if ((coll.CompareTag("closeAttack")|| coll.CompareTag("farAttack")) && coll.IsTouching(GetComponent<BoxCollider2D>()))
+        if ((coll.CompareTag("closeAttack")|| coll.CompareTag("farAttack")) && coll.IsTouching(GetComponent<PolygonCollider2D>()))
         {
             hp -= 3;
             print(hp);
@@ -50,7 +50,7 @@ public class MonsterBossHit : MonoBehaviour
         {
             bossdie = true;
             Destroy(this.gameObject);
-            
+            Achievement.SetActive(true);
         }
 
     }

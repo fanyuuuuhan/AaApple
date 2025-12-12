@@ -16,6 +16,8 @@ public class MapUIClickHandler : MonoBehaviour,
     void Start()
     {
         originalScale = transform.localScale;
+        GameObject player = GameObject.Find("Player");
+        Destroy(player);
     }
 
     public void OnPointerClick(PointerEventData eventData) //ÂIÀ»¨Æ¥ó

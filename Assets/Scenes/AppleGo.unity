@@ -635,6 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf53d470d058b042b0eb25ca2db1f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Achievement: {fileID: 2099416750}
   noHitTime: 0.5
   noHit: 0
 --- !u!60 &827295083
@@ -683,14 +684,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.36709818, y: 0.36385673}
-      - {x: 0.071975455, y: 0.28205335}
-      - {x: -0.18790399, y: 0.3833055}
-      - {x: -0.40275475, y: 0.16663209}
-      - {x: -0.42833683, y: -0.15681358}
-      - {x: -0.32085398, y: -0.26004583}
-      - {x: -0.35413215, y: -0.48703387}
-      - {x: 0.35089055, y: -0.48379242}
+    - - {x: 0.36602345, y: 0.3692133}
+      - {x: 0.037460133, y: 0.2663896}
+      - {x: -0.13764751, y: 0.378783}
+      - {x: -0.4362017, y: 0.09877527}
+      - {x: -0.3755931, y: -0.50319016}
+      - {x: 0.36283326, y: -0.49680996}
   m_UseDelaunayMesh: 0
 --- !u!1 &969184840
 GameObject:
@@ -1495,7 +1494,7 @@ MonoBehaviour:
   Bullet: {fileID: 5184530303615661447, guid: 77e0d3a66e8936a48ab5e1a72445d0ba, type: 3}
   Bulletpoint: {fileID: 1206393328}
   delayTime: 1
-  speed: 2
+  speed: 5
 --- !u!1 &1239614776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,7 +1604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2099416751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1625,7 +1624,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2099416750}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

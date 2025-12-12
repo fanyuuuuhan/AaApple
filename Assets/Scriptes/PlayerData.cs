@@ -11,6 +11,8 @@ public class PlayerData : MonoBehaviour
     //­p®É¾¹
     public static float PauseTimeS = 0;
     public static float PauseTimeM = 0;
+    public static float PauseSTime = 0;
+    public static float PauseMTime = 0;
     public static bool TimerPaused = false;
 
 }

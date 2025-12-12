@@ -52,8 +52,8 @@ public class MonsterFarAttack : MonoBehaviour
             Vector3 dir = (player.position - Bulletpoint.position).normalized;
 
             // 轉向玩家
-            float angle = Mathf.Atan2(dir.y, dir.z) * Mathf.Rad2Deg;  //Atan計算「方向向量的角度」，Rad2Deg弧度 → 角度 的轉換縮放
-            transform.rotation = Quaternion.Euler(angle, 0, 0);
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
 
             // 計時射擊
             timer += Time.deltaTime;

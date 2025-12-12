@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class InitPlayer : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class InitPlayer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameManager.Instance.Player.transform.position = new Vector3(-8, 0, 0);
+        
     }
 
     void Update()

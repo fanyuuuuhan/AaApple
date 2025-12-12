@@ -31,8 +31,8 @@ public class CameraFollow : MonoBehaviour
         // 目標位置
         Vector3 desiredPosition = target.position + offset;
 
-        // ★ 玩家 Y < 5 → 攝影機 Y 回到初始值 originalY
-        if (target.position.y < 5)
+        // ★ 玩家 Y < 4 → 攝影機 Y 回到初始值 originalY
+        if (target.position.y < 4)
         {
             desiredPosition.y = originalY;
         }
