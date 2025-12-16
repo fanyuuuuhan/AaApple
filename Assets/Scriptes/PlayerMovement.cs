@@ -11,10 +11,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     Animator ani;
     SpriteRenderer sr;
-
-    //收集物件
-    public static int collection = 0;
-    public static TextMeshProUGUI CollCount;
+    public CollectionGet CollectionGet;
 
     //角色移動
     public float jump = 2f;
@@ -73,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     //結束遊戲
     public static bool isEndStar = false;
+    public static bool isGameOver = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -83,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
 
         HP = InitPlayer.HP;
         max_hp = InitPlayer.maxHP;
-        collection = InitPlayer.collection;
 
         if (HeartHp != null)
             HeartHp.UpdateHearts(HP, max_hp);
@@ -128,11 +125,16 @@ public class PlayerMovement : MonoBehaviour
             ani.SetBool("jump", false);
         }
         //收集物件
-        if (collision.tag == "bling")
+        if (collision.CompareTag("Collectible"))
         {
-            Destroy(collision.gameObject);
-            collection++;
-            CollCount.text = $"{collection:F0}";
+            Collectible item = collision.GetComponent<Collectible>();
+
+            if (item != null)
+            {
+                CollectionGet.ActivateItem(item.id);
+                Destroy(collision.gameObject); // 收集後消失
+            }
+
         }
         //轉移場景
         if (collision.CompareTag("AppleGo"))
@@ -213,6 +215,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isEnter= true;
             isEndStar = true;
+        }
+        //遊戲死亡
+        if (collision.CompareTag("DeadLine"))
+        {
+            isGameOver = true;
         }
     }
     void OnTriggerExit2D(Collider2D collision)

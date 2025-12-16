@@ -13,6 +13,12 @@ public class MonsterFarAttack : MonoBehaviour
     public float speed = 2f; //子彈速度
     float timer;
     public static bool isPlayer = false;
+    public static bool isAttack = false;
+
+    private void Awake()
+    {
+
+    }
 
     IEnumerator Start()
     {
@@ -51,16 +57,13 @@ public class MonsterFarAttack : MonoBehaviour
             //計算角色方位
             Vector3 dir = (player.position - Bulletpoint.position).normalized;
 
-            // 轉向玩家
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-
             // 計時射擊
             timer += Time.deltaTime;
             if (timer >= delayTime)
             {
                 timer = 0;
 
+                isAttack = true;
                 GameObject bullet = Instantiate(Bullet, Bulletpoint.position, Quaternion.identity);
                 bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * speed; //dir=方向
             }

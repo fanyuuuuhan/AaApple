@@ -9,6 +9,7 @@ public class MonsterHit : MonoBehaviour
     Animator ani;
     float direction = 1;
     float speed = 0.5f;
+    public Transform player;
 
 
     //無敵時間設置
@@ -21,6 +22,7 @@ public class MonsterHit : MonoBehaviour
 
     //停頓判斷
     public float stopDuration = 1f;  // 停頓時間
+    public float AttackStop = 0.5f;
     bool isMoving = false;
 
     //特定怪物顯示傳送門
@@ -41,6 +43,8 @@ public class MonsterHit : MonoBehaviour
         
         //停頓動畫
         StartCoroutine(MoveWithPause());
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     //行走停頓
@@ -61,31 +65,66 @@ public class MonsterHit : MonoBehaviour
             
         }
     }
+    //攻擊停頓
+    IEnumerator AttackPause()
+    {
+        while (true)
+        {
+            // 停頓 1 秒
+            ani.SetBool("attack", true);
+            yield return new WaitForSeconds(AttackStop);
+        }
+    }
 
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-
-        if (coll.CompareTag("closeAttack") && coll.IsTouching(GetComponent<BoxCollider2D>()))
+        if (CompareTag("FarMonster"))
         {
-            hp -= 3;
-            print(hp);
-            Debug.Log("怪物-3");
-            ani.SetBool("move", false);
+            if (coll.CompareTag("closeAttack") && coll.IsTouching(GetComponent<PolygonCollider2D>()))
+            {
+                hp -= 3;
+                print(hp);
+                Debug.Log("怪物-3");
+                ani.SetBool("move", false);
 
-            noHit = true;
-            Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+                noHit = true;
+                Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+            }
+            if (coll.CompareTag("farAttack") && coll.IsTouching(GetComponent<PolygonCollider2D>()))
+            {
+                hp -= 2;
+                print(hp);
+                ani.SetBool("move", false);
+
+                Debug.Log("怪物-2");
+                noHit = true;
+                Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+            }
         }
-        if (coll.CompareTag("farAttack") && coll.IsTouching(GetComponent<BoxCollider2D>()))
+        else if(CompareTag("Monster"))
         {
-            hp -= 2;
-            print(hp);
-            ani.SetBool("move", false);
+            if (coll.CompareTag("closeAttack") && coll.IsTouching(GetComponent<BoxCollider2D>()))
+            {
+                hp -= 3;
+                print(hp);
+                Debug.Log("怪物-3");
+                ani.SetBool("move", false);
 
-            Debug.Log("怪物-2");
-            noHit = true;
-            Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
-        }
+                noHit = true;
+                Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+            }
+            if (coll.CompareTag("farAttack") && coll.IsTouching(GetComponent<BoxCollider2D>()))
+            {
+                hp -= 2;
+                print(hp);
+                ani.SetBool("move", false);
+
+                Debug.Log("怪物-2");
+                noHit = true;
+                Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
+            }
+        }        
     }
 
 
@@ -99,7 +138,6 @@ public class MonsterHit : MonoBehaviour
     {
         ani.SetBool("move", true);
 
-
         if (hp <= 0)
         {
             if (controlsPortal && Portal != null)
@@ -112,7 +150,26 @@ public class MonsterHit : MonoBehaviour
        
         if (CompareTag("FarMonster"))
         {
-            
+            //攻擊轉向
+            if (MonsterFarAttack.isPlayer)
+            {
+                //計算角色方位
+                Vector3 dir = (player.position - transform.position).normalized;
+
+                // 轉向玩家
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+
+            //攻擊動畫
+            if (MonsterFarAttack.isAttack)
+            {
+                StartCoroutine(AttackPause());
+                MonsterFarAttack.isAttack = false;
+                ani.SetBool("attack", false);
+            }         
+
+            //怪物移動
             transform.position += new Vector3(-speed * direction * Time.deltaTime, 0, 0);
             if (transform.position.x > startX + moveRange)
             {
@@ -125,8 +182,6 @@ public class MonsterHit : MonoBehaviour
                 sr.flipX = true;
             }
         }
-        
-
-        
+                
     }
 }

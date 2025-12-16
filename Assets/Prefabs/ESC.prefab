@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSC: {fileID: 0}
   setting: {fileID: 0}
+  EndStar: {fileID: 0}
