@@ -14,12 +14,12 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI M0;
 
     public GameObject EndStar;
+    public GameObject GameOver;
 
     public float GetNowTimeS() => nowTimeS;
     public float GetNowTimeM() => nowTimeM;
 
     //星星顯示
-    
     public bool StarShow = false;
 
     void Start()
@@ -64,11 +64,20 @@ public class Timer : MonoBehaviour
         S0.text = Mathf.Floor(Stimer).ToString();
         M0.text = $"{Mtimer}";
 
+        //完成遊戲
         if (PlayerMovement.isEndStar)
         {
             PlayerData.TimerPaused = true;
             EndStar.gameObject.SetActive(true);
             StarShow = true;
+        }
+
+        //遊戲死亡
+        if (PlayerMovement.isGameOver)
+        {
+            PlayerData.TimerPaused = true;
+            GameOver.gameObject.SetActive(true);
+
         }
     }
 

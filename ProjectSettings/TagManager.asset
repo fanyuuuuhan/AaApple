@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - bling
   - Ground
   - Monster
   - closeAttack
@@ -20,6 +19,7 @@ TagManager:
   - DeadLine
   - EndLine
   - EndTimeStar
+  - Collectible
   layers:
   - Default
   - TransparentFX

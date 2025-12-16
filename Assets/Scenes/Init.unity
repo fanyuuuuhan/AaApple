@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1a0b1c7ea215547a4fbcbd096fbe48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectionGetInstance: {fileID: 0}
   Player: {fileID: 0}
   PlayerUI: {fileID: 0}
   PlayerPrefab: {fileID: 5651070218686248367, guid: 5098eecf178902d4b8d101c673bcc206, type: 3}

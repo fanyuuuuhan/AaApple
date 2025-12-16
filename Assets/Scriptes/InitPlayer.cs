@@ -6,7 +6,6 @@ public class InitPlayer : MonoBehaviour
 {
     public static int HP = 20;
     public static int maxHP = 20;
-    public static int collection = 0;
 
     public static bool isBackMap = false;
 

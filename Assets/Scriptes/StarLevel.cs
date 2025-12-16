@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -9,6 +8,11 @@ public class StarLevel : MonoBehaviour
     public Timer Timer;
     public Image[] star;
 
+    //UI移動法
+    RectTransform rect;
+    public float speed = 50;
+    bool StarMove = false;
+
     public float Level1 = 0;
     public float Level2 = 0;
     public float Level3 = 0;
@@ -17,7 +21,7 @@ public class StarLevel : MonoBehaviour
 
     void Start()
     {
-
+        rect = GetComponent<RectTransform>();
     }
 
 
@@ -27,14 +31,27 @@ public class StarLevel : MonoBehaviour
         if (Timer.StarShow)
         {
             Timer.StarShow = false;
-            StartCoroutine(DelayAction());
-
+            StarMove = true;
+            
+        }
+        if (StarMove)
+        {
+            if (rect.anchoredPosition.y > 0)
+            {
+                rect.anchoredPosition += new Vector2(0, -speed * Time.deltaTime);
+            }
+            else if (rect.anchoredPosition.y < 0)
+            {
+                rect.anchoredPosition = Vector2.zero;
+                StarMove = false;
+                StartCoroutine(DelayAction());
+            }
         }
     }
 
     IEnumerator DelayAction()
     {
-        yield return new WaitForSeconds(2f);  // 等 3 秒
+        yield return new WaitForSeconds(1f);  // 等 1 秒
 
         if (Timer.nowTimeM < Level1)
         {

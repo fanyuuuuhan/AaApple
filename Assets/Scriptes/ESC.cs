@@ -5,12 +5,13 @@ public class ESC : MonoBehaviour
 {
     public GameObject eSC;
     public GameObject setting;
-    public GameObject EndStar;
+    Timer Timer;
+
     public static bool isRestart = false;
 
     private void Awake()
     {
-        EndStar.gameObject.SetActive(false);
+
     }
 
     void Start()
@@ -48,7 +49,7 @@ public class ESC : MonoBehaviour
     {
         isRestart = true;
         eSC.gameObject.SetActive(false);
-        EndStar.gameObject.SetActive(false);
+        Timer.EndStar.gameObject.SetActive(false);
         Time.timeScale = 1f;
         MonsterBossHit.bossdie = false;
         
@@ -57,14 +58,12 @@ public class ESC : MonoBehaviour
 
         InitPlayer.HP = 20;
         InitPlayer.maxHP = 20;
-        InitPlayer.collection = 0;
         Timer.nowTimeS = 0;
         Timer.nowTimeM = 0;
         Timer.Stimer = 0;
         Timer.Mtimer = 0;
         PlayerData.TimerPaused = false;
         PlayerMovement.isEndStar = false;
-        IsMonsterDie.isDie = false;
 
         if (GameManager.Instance != null && GameManager.Instance.Player != null)
         {
@@ -73,15 +72,11 @@ public class ESC : MonoBehaviour
             {
                 PlayerMovement.HP = InitPlayer.HP;
                 pm.max_hp = InitPlayer.maxHP;
-                PlayerMovement.collection = InitPlayer.collection;
 
                 //正確重設愛心血量
                 if (pm.HeartHp != null)
                     pm.HeartHp.UpdateHearts(PlayerMovement.HP, pm.max_hp);
 
-                //重設收集物
-                if (PlayerMovement.CollCount != null)
-                    PlayerMovement.CollCount.text = "0";
             }
         }
 
@@ -98,16 +93,14 @@ public class ESC : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Map");
         eSC.gameObject.SetActive(false);
-        EndStar.gameObject.SetActive(false);
+        Timer.EndStar.gameObject.SetActive(false);
         PlayerMovement.isEndStar = false;
         MonsterBossHit.bossdie = false;
-        IsMonsterDie.isDie = false;
 
 
         //重置UI
         InitPlayer.HP = 20;
         InitPlayer.maxHP = 20;
-        InitPlayer.collection = 0;
         Timer.nowTimeS = 0;
         Timer.nowTimeM = 0;
         Timer.Stimer = 0;
@@ -120,20 +113,14 @@ public class ESC : MonoBehaviour
             {
                 PlayerMovement.HP = InitPlayer.HP;
                 pm.max_hp = InitPlayer.maxHP;
-                PlayerMovement.collection = InitPlayer.collection;
 
                 //正確重設愛心血量
                 if (pm.HeartHp != null)
                     pm.HeartHp.UpdateHearts(PlayerMovement.HP, pm.max_hp);
 
-                //重設收集物
-                if (PlayerMovement.CollCount != null)
-                    PlayerMovement.CollCount.text = "0";
             }
         }
 
-        //Destroy(GameManager.Instance.PlayerUI);
-        Destroy(eSC);
     }
 
     public void CloseSetting()
