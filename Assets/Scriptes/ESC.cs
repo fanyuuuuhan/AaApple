@@ -25,7 +25,7 @@ public class ESC : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(eSC);
+           // DontDestroyOnLoad(eSC);
         }
         
     }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1dbb2ac7a18c1714397458dcab0be1a2
+guid: ddc0e07d2605e61498a0254c8c0a2d7a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4392492216845555020
-    second: Acube_0
+      213: -3723175747502234136
+    second: NLACube_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Acube_0
+      name: NLACube_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 136
-        height: 125
+        height: 122
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c455fb7166445fc30800000000000000
-      internalID: 4392492216845555020
+      spriteID: 8e5a7c5426f945cc0800000000000000
+      internalID: -3723175747502234136
       vertices: []
       indices: 
       edges: []
@@ -126,7 +126,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Acube_0: 4392492216845555020
+      NLACube_0: -3723175747502234136
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -818,28 +818,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5122688353649946407, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
   m_PrefabInstance: {fileID: 789494356}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &789494360 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 951798761462933364, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
-  m_PrefabInstance: {fileID: 789494356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &789494361 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6733742553548332944, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
-  m_PrefabInstance: {fileID: 789494356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &797583233
 GameObject:
   m_ObjectHideFlags: 0
@@ -4524,9 +4502,9 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 3.72866e-40, g: 3.72866e-40, b: 3.72866e-40, a: 3.72866e-40}
   - m_RefCount: 0
-    m_Data: {r: 3.72866e-40, g: 3.72866e-40, b: 3.72866e-40, a: 3.72866e-40}
+    m_Data: {r: 8.657e-41, g: 8.657e-41, b: 8.657e-41, a: 8.657e-41}
   - m_RefCount: 0
-    m_Data: {r: 4.53174e-40, g: 4.53174e-40, b: 4.53174e-40, a: 4.53174e-40}
+    m_Data: {r: 8.657e-41, g: 8.657e-41, b: 8.657e-41, a: 8.657e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4716,11 +4694,11 @@ PrefabInstance:
     - target: {fileID: 7189269382075365231, guid: c74f6cf0246e6424f80994467a644dde, type: 3}
       propertyPath: timerM
       value: 
-      objectReference: {fileID: 789494360}
+      objectReference: {fileID: 0}
     - target: {fileID: 7189269382075365231, guid: c74f6cf0246e6424f80994467a644dde, type: 3}
       propertyPath: timerS
       value: 
-      objectReference: {fileID: 789494361}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

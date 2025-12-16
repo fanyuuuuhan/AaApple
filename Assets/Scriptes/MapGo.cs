@@ -59,6 +59,7 @@ public class MapUIClickHandler : MonoBehaviour,
                 Time.deltaTime * hoverspeed
             );
         }
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)

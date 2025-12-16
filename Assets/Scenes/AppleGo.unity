@@ -1945,7 +1945,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eSC: {fileID: 1134111270}
   setting: {fileID: 1134111269}
-  EndStar: {fileID: 0}
 --- !u!4 &1395735050
 Transform:
   m_ObjectHideFlags: 0
