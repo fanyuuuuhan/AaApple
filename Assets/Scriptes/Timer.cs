@@ -24,6 +24,8 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
+        GameOver.gameObject.SetActive(false);
+        EndStar.gameObject.SetActive(false);
         // 如果是從 Portal 返回 → 從 PlayerData 繼續
         nowTimeS = PlayerData.PauseTimeS;
         nowTimeM = PlayerData.PauseTimeM;

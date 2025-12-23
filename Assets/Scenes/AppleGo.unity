@@ -1585,11 +1585,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 35739132326824522, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395735049}
+    - target: {fileID: 35739132326824522, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackMap
+      objectReference: {fileID: 0}
     - target: {fileID: 598695589188867563, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
       propertyPath: m_Name
       value: Canvas-ESC
       objectReference: {fileID: 0}
+    - target: {fileID: 3588414660169750520, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395735049}
+    - target: {fileID: 3588414660169750520, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseSetting
+      objectReference: {fileID: 0}
     - target: {fileID: 3726719448384976213, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441909249607650704, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1673,9 +1693,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6287338864779424017, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395735049}
+    - target: {fileID: 6287338864779424017, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Setting
+      objectReference: {fileID: 0}
     - target: {fileID: 6383784843785234543, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483581757873677997, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395735049}
+    - target: {fileID: 6483581757873677997, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ContiuneGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8034454620045224171, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1395735049}
+    - target: {fileID: 8034454620045224171, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
       objectReference: {fileID: 0}
     - target: {fileID: 8579634999631391531, guid: df777b6c7d6dcf042b64928273a63435, type: 3}
       propertyPath: m_IsActive
@@ -1764,7 +1808,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 2.5
+  m_Radius: 6
 --- !u!114 &1206393330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2500,6 +2544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ad757efb2dbf047b352c7f6f975ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardKey: Apple
 --- !u!212 &2099416752
 SpriteRenderer:
   m_ObjectHideFlags: 0

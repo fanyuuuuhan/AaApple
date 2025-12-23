@@ -1,12 +1,20 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 
 public class StarLevel : MonoBehaviour
 {
     public Timer Timer;
     public Image[] star;
+
+    public TextMeshProUGUI timerS;//計時器秒數個位
+    public TextMeshProUGUI timerM;//計時器分數個位
+    public TextMeshProUGUI S0;//計時器秒數十位
+    public TextMeshProUGUI M0;//計時器分數十位
+
+    public TextMeshProUGUI Collection;
 
     //UI移動法
     RectTransform rect;
@@ -47,6 +55,11 @@ public class StarLevel : MonoBehaviour
                 StartCoroutine(DelayAction());
             }
         }
+        timerS.text = Mathf.Floor(Timer.nowTimeS).ToString();
+        timerM.text = Mathf.Floor(Timer.nowTimeM).ToString();
+        S0.text = Mathf.Floor(Timer.Stimer).ToString();
+        M0.text = $"{Timer.Mtimer}";
+        Collection.text = $"{PlayerMovement.collection:f0}";
     }
 
     IEnumerator DelayAction()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class MonsterBossHit : MonoBehaviour
 {
@@ -12,11 +13,31 @@ public class MonsterBossHit : MonoBehaviour
     public static bool bossdie=false;
 
 
+    public float AttackStop = 0.5f;
+    public float HurtStop = 0.5f;
+
+    Animator ani;
+
+
+    IEnumerator AttackPause()
+    {
+        ani.SetBool("attack", true);
+        yield return new WaitForSeconds(AttackStop);
+        ani.SetBool("attack", false);
+    }
+    //受傷停頓
+    IEnumerator HurtPause()
+    {
+        ani.SetBool("hurt", true);
+        yield return new WaitForSeconds(HurtStop);
+        ani.SetBool("hurt", false);
+    }
+
     int hp = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        ani = GetComponent<Animator>();
         hp = 20;
 
     }
@@ -28,9 +49,11 @@ public class MonsterBossHit : MonoBehaviour
 
         if ((coll.CompareTag("closeAttack")|| coll.CompareTag("farAttack")) && coll.IsTouching(GetComponent<PolygonCollider2D>()))
         {
-            hp -= 3;
+            hp -= 1;
             print(hp);
             Debug.Log("Boss-1");
+
+            StartCoroutine(HurtPause());
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -45,7 +68,7 @@ public class MonsterBossHit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        StartCoroutine(AttackPause());
         if (hp <= 0)
         {
             bossdie = true;

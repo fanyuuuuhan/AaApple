@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 7462533140276409681}
   - component: {fileID: 5441379413604812880}
   - component: {fileID: 5846588766300035261}
-  - component: {fileID: 56094875200914028}
   - component: {fileID: 8396041707096116169}
   m_Layer: 0
   m_Name: LeavesBug
@@ -116,7 +115,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2187187501213164826}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 12.39005, y: -3.67882, z: 0}
   m_LocalScale: {x: 0.5477, y: 0.5477, z: 0.5477}
   m_ConstrainProportionsScale: 0
@@ -213,12 +212,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f342017a0b96ee3469fce6d01d389bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   noHitTime: 0.5
   noHit: 0
   moveRange: 1
   stopDuration: 1
+  AttackStop: 0.5
+  HurtStop: 0.5
   Portal: {fileID: 0}
   controlsPortal: 0
+  hasKey: 0
+  Key: {fileID: 0}
 --- !u!50 &5846588766300035261
 Rigidbody2D:
   serializedVersion: 5
@@ -246,18 +250,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &56094875200914028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2187187501213164826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 270d81c5a63baa249abf8e8fae035273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &8396041707096116169
 PolygonCollider2D:
   m_ObjectHideFlags: 0
