@@ -23,11 +23,16 @@ public class MonsterHit : MonoBehaviour
     //停頓判斷
     public float stopDuration = 1f;  // 停頓時間
     public float AttackStop = 0.5f;
+    public float HurtStop = 0.5f;
     bool isMoving = false;
 
     //特定怪物顯示傳送門
     public GameObject Portal;
     public bool controlsPortal = false; // 是否控制 Portal
+
+    //鑰匙偵測
+    public bool hasKey = false;
+    public GameObject Key;
 
     int hp = 0;
 
@@ -68,12 +73,16 @@ public class MonsterHit : MonoBehaviour
     //攻擊停頓
     IEnumerator AttackPause()
     {
-        while (true)
-        {
-            // 停頓 1 秒
-            ani.SetBool("attack", true);
-            yield return new WaitForSeconds(AttackStop);
-        }
+        ani.SetBool("attack", true);
+        yield return new WaitForSeconds(AttackStop);
+        ani.SetBool("attack", false);
+    }
+    //受傷停頓
+    IEnumerator HurtPause()
+    {
+        ani.SetBool("hurt", true);
+        yield return new WaitForSeconds(HurtStop);
+        ani.SetBool("hurt", false);
     }
 
 
@@ -87,6 +96,7 @@ public class MonsterHit : MonoBehaviour
                 print(hp);
                 Debug.Log("怪物-3");
                 ani.SetBool("move", false);
+                StartCoroutine(HurtPause());
 
                 noHit = true;
                 Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -96,6 +106,7 @@ public class MonsterHit : MonoBehaviour
                 hp -= 2;
                 print(hp);
                 ani.SetBool("move", false);
+                StartCoroutine(HurtPause());
 
                 Debug.Log("怪物-2");
                 noHit = true;
@@ -110,6 +121,7 @@ public class MonsterHit : MonoBehaviour
                 print(hp);
                 Debug.Log("怪物-3");
                 ani.SetBool("move", false);
+                StartCoroutine(HurtPause());
 
                 noHit = true;
                 Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -119,6 +131,7 @@ public class MonsterHit : MonoBehaviour
                 hp -= 2;
                 print(hp);
                 ani.SetBool("move", false);
+                StartCoroutine(HurtPause());
 
                 Debug.Log("怪物-2");
                 noHit = true;
@@ -142,23 +155,29 @@ public class MonsterHit : MonoBehaviour
         {
             if (controlsPortal && Portal != null)
                 Portal.SetActive(true);
+            if (hasKey && Key != null)
+            {
+                Key.SetActive(true);
+            }
             Destroy(this.gameObject);
         }
 
+
+
         if (!isMoving) return;
 
-       
+       //遠攻怪物轉向
         if (CompareTag("FarMonster"))
         {
             //攻擊轉向
             if (MonsterFarAttack.isPlayer)
             {
-                //計算角色方位
-                Vector3 dir = (player.position - transform.position).normalized;
-
-                // 轉向玩家
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0, 0, angle);
+                sr.flipX = player.position.x < -transform.position.x;
+            }
+            else
+            {
+                //非攻擊時：依移動方向翻面
+                sr.flipX = direction < 0;
             }
 
             //攻擊動畫
@@ -166,7 +185,6 @@ public class MonsterHit : MonoBehaviour
             {
                 StartCoroutine(AttackPause());
                 MonsterFarAttack.isAttack = false;
-                ani.SetBool("attack", false);
             }         
 
             //怪物移動
@@ -174,12 +192,10 @@ public class MonsterHit : MonoBehaviour
             if (transform.position.x > startX + moveRange)
             {
                 direction = 1;
-                sr.flipX = false;
             }
             else if (transform.position.x < startX - moveRange)
             {
                 direction = -1;
-                sr.flipX = true;
             }
         }
                 

@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     float movement;
     bool isflip = false;
 
+    //物件收集數
+    public static int collection = 0;
+
     //地面偵測
     bool isGround = false;
 
@@ -67,6 +70,9 @@ public class PlayerMovement : MonoBehaviour
     bool isEnter = false;
     float timer = 0f;
     public float enterTime = 1.5f;
+
+    //鑰匙偵測
+    public static bool isKey = false;
 
     //結束遊戲
     public static bool isEndStar = false;
@@ -133,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 CollectionGet.ActivateItem(item.id);
                 Destroy(collision.gameObject); // 收集後消失
+                collection++;
             }
 
         }
@@ -205,10 +212,18 @@ public class PlayerMovement : MonoBehaviour
         //成就偵測
         if (collision.CompareTag("Achievement"))
         {
-            isAch = true;
+            // 現在已經在新場景，Achievement 物件已生成
+            Achievement achievement = collision.GetComponent<Achievement>();
+            if (achievement != null)
+            {
+                isAch = true;
+                achievement.UnlockCard();
+            }
+
             GameManager.Instance.SceneChange(PlayerData.BackScene);
             transform.position = new Vector3(90, -3, 0);
             PlayerData.BackScene = "";
+
         }
         //遊戲結束檢查
         if (collision.CompareTag("EndLine"))
@@ -220,6 +235,11 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("DeadLine"))
         {
             isGameOver = true;
+        }
+        //鑰匙偵測
+        if (collision.CompareTag("Key"))
+        {
+            isKey = true;
         }
     }
     void OnTriggerExit2D(Collider2D collision)

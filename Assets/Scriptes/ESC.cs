@@ -16,7 +16,7 @@ public class ESC : MonoBehaviour
 
     void Start()
     {
-
+        
         GameObject[] canvases = GameObject.FindGameObjectsWithTag("Canvas");
 
         if (canvases.Length > 1)
@@ -37,6 +37,7 @@ public class ESC : MonoBehaviour
             eSC.gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
+        Timer = FindAnyObjectByType<Timer>();
     }
 
     public void ContiuneGame()
@@ -50,6 +51,7 @@ public class ESC : MonoBehaviour
         isRestart = true;
         eSC.gameObject.SetActive(false);
         Timer.EndStar.gameObject.SetActive(false);
+        Timer.GameOver.gameObject.SetActive(false);
         Time.timeScale = 1f;
         MonsterBossHit.bossdie = false;
         
@@ -64,6 +66,7 @@ public class ESC : MonoBehaviour
         Timer.Mtimer = 0;
         PlayerData.TimerPaused = false;
         PlayerMovement.isEndStar = false;
+        PlayerMovement.isGameOver = false;
 
         if (GameManager.Instance != null && GameManager.Instance.Player != null)
         {
@@ -94,7 +97,9 @@ public class ESC : MonoBehaviour
         SceneManager.LoadScene("Map");
         eSC.gameObject.SetActive(false);
         Timer.EndStar.gameObject.SetActive(false);
+        Timer.GameOver.gameObject.SetActive(false);
         PlayerMovement.isEndStar = false;
+        PlayerMovement.isGameOver = false;
         MonsterBossHit.bossdie = false;
 
 
@@ -127,4 +132,5 @@ public class ESC : MonoBehaviour
     {
         setting.gameObject.SetActive(false);
     }
+
 }

@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class Achievement : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public string cardKey; // 例如 "Card_Sword"
+
+    // 玩家收集成就時呼叫這個方法
+    public void UnlockCard()
     {
-        
+        if (!string.IsNullOrEmpty(cardKey))
+        {
+            PlayerPrefs.SetInt(cardKey, 1);
+            PlayerPrefs.Save();
+            Debug.Log($"[AppleGo] {cardKey} 已存檔");
+        }
     }
 
     // Update is called once per frame
