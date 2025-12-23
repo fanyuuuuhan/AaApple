@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
     //Æ_°Í°»´ú
     public static bool isKey = false;
 
+
     //µ²§ô¹CÀ¸
     public static bool isEndStar = false;
     public static bool isGameOver = false;
@@ -258,6 +259,8 @@ public class PlayerMovement : MonoBehaviour
             textfix.HideText();
             textfix = null;
         }
+
+        
     }
 
     void OnCollisionEnter2D(Collision2D coll)

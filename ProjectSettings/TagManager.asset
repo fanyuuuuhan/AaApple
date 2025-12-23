@@ -22,6 +22,7 @@ TagManager:
   - Collectible
   - bling
   - Key
+  - Lcok
   layers:
   - Default
   - TransparentFX
