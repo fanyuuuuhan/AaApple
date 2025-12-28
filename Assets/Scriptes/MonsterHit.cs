@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static MonsterHit;
 
 public class MonsterHit : MonoBehaviour
 {
@@ -34,6 +36,9 @@ public class MonsterHit : MonoBehaviour
     public bool hasKey = false;
     public GameObject Key;
 
+    //怪物死亡紀錄
+    public string monsterID;
+
     int hp = 0;
 
     void Start()
@@ -50,6 +55,12 @@ public class MonsterHit : MonoBehaviour
         StartCoroutine(MoveWithPause());
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        //怪物是否已死亡紀錄
+        if (MonsterDie.DeadMonster.Contains(monsterID))
+        {
+            gameObject.SetActive(false); // 如果已經死過，直接隱藏
+        }
     }
 
     //行走停頓
@@ -153,6 +164,11 @@ public class MonsterHit : MonoBehaviour
 
         if (hp <= 0)
         {
+            if (!string.IsNullOrEmpty(monsterID))
+            {
+                MonsterDie.DeadMonster.Add(monsterID);
+            }
+
             if (controlsPortal && Portal != null)
                 Portal.SetActive(true);
             if (hasKey && Key != null)
@@ -161,8 +177,6 @@ public class MonsterHit : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-
-
 
         if (!isMoving) return;
 
@@ -199,5 +213,12 @@ public class MonsterHit : MonoBehaviour
             }
         }
                 
+    }
+
+    public static class MonsterDie
+    {
+        // 記錄已被殺死的怪物 ID
+        //HashSet<string> (集合資料結構)
+        public static HashSet<string> DeadMonster = new HashSet<string>();
     }
 }

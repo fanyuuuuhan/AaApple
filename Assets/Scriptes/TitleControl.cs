@@ -1,0 +1,23 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class TitleControl : MonoBehaviour
+{
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void GameStart()
+    {
+        print("開始");
+        SceneManager.LoadScene("場景名稱");
+    }
+}

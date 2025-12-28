@@ -19,6 +19,10 @@ public class TextShow : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(ShowTimePause());
+        if (!MonsterBossHit.bossdie)
+        {
+            StartCoroutine(ShowTimePause());
+        }
+        
     }
 }

@@ -15,4 +15,7 @@ public class PlayerData : MonoBehaviour
     public static float PauseMTime = 0;
     public static bool TimerPaused = false;
 
+    //總星星數
+    public static float AllOfStar = 0;
+
 }

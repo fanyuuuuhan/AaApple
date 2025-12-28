@@ -23,6 +23,10 @@ TagManager:
   - bling
   - Key
   - Lcok
+  - SugarGo
+  - SugarBack
+  - Manager
+  - GoldSugar
   layers:
   - Default
   - TransparentFX
@@ -30,9 +34,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Ground
+  - BossAnt
+  - Montser
   - 
   - 
   - 

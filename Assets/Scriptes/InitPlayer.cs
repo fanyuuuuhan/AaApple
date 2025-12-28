@@ -7,6 +7,9 @@ public class InitPlayer : MonoBehaviour
     public static int HP = 20;
     public static int maxHP = 20;
 
+    // 0 是普通型態，1 是蘋果型態
+    public static int playerForm = 0;
+
     public static bool isBackMap = false;
 
 

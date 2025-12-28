@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private bool rotatingToTarget = false;
     bool turnback = false;
     private Quaternion targetRotation;
+    public float angel = 90f;
 
     //丟假牙
     public GameObject Falsetooth;
@@ -73,7 +75,14 @@ public class PlayerMovement : MonoBehaviour
 
     //鑰匙偵測
     public static bool isKey = false;
+    public GameObject Key;
 
+    //切換阿婆服飾
+    public RuntimeAnimatorController Fight;
+    public RuntimeAnimatorController Cloak;
+
+    //收集金砂糖
+    public static float goldSugar = 0f;
 
     //結束遊戲
     public static bool isEndStar = false;
@@ -85,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
         rb= GetComponent<Rigidbody2D>();
         ani= GetComponent<Animator>();
         sr= GetComponent<SpriteRenderer>();
+
+        UpdatePlayerAppearance();
 
         HP = InitPlayer.HP;
         max_hp = InitPlayer.maxHP;
@@ -117,10 +128,25 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         // 改為待機動畫
-        ani.Play("idle0");
+        ani.Play("Idle_0");
 
         // 啟用玩家操作
         isEnter = false;
+    }
+
+    // 更新外觀的方法
+    void UpdatePlayerAppearance()
+    {
+        switch (InitPlayer.playerForm)
+        {
+            case 0:
+                ani.runtimeAnimatorController = Cloak;
+                break;
+            default:
+                ani.runtimeAnimatorController = Fight;
+                break;
+
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -144,26 +170,38 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        //轉移場景
+        if (collision.CompareTag("GoldSugar"))
+        {
+            goldSugar++;
+            Destroy(collision.gameObject);
+        }
+        
+        //轉移場景-AppleGo
         if (collision.CompareTag("AppleGo"))
         {
-            Portal portal = collision.GetComponent<Portal>();
-
-            // 暫停計時器
-            PlayerData.TimerPaused = true;
-
-            // 記錄目前時間（Timer OnDestroy()會做，不過這裡再做一次保險）
-            PlayerData.PauseTimeS = FindFirstObjectByType<Timer>().GetNowTimeS();
-            PlayerData.PauseTimeM = FindFirstObjectByType<Timer>().GetNowTimeM();
-
-            isPor = true;
-            PlayerData.BackScene = SceneManager.GetActiveScene().name;
-            if (portal != null)
-            {
-                GameManager.Instance.SceneChange(portal.AsceneName);
-                transform.position = new Vector3(-7, 6, 0);
-            }
+            InitPlayer.playerForm = 1;
+            UpdatePlayerAppearance();
+            PerformTeleport(collision);
+            transform.position = new Vector3(-7, 6, 0);
         }
+        //轉移場景-SugarGo
+        if (collision.CompareTag("SugarGo"))
+        {
+            InitPlayer.playerForm = 1;
+            UpdatePlayerAppearance();
+            PerformTeleport(collision);
+            transform.position = new Vector3(-15, 1, 0);
+        }
+        if (collision.CompareTag("SugarBack"))
+        {
+            InitPlayer.playerForm = 0;
+            UpdatePlayerAppearance();
+            GameManager.Instance.SceneChange(PlayerData.BackScene);
+
+            transform.position = new Vector3(74, 1, 0);
+            PlayerData.BackScene = "";
+        }
+
         //奶油偵測
         if (collision.CompareTag("Butter"))
         {
@@ -200,7 +238,9 @@ public class PlayerMovement : MonoBehaviour
         //BOSS攻擊
         if (collision.CompareTag("BossHit"))
         {
+            Destroy(collision.gameObject);
             TakeHit(4);
+            
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
@@ -220,8 +260,10 @@ public class PlayerMovement : MonoBehaviour
                 isAch = true;
                 achievement.UnlockCard();
             }
-
+            InitPlayer.playerForm = 0;
+            UpdatePlayerAppearance();
             GameManager.Instance.SceneChange(PlayerData.BackScene);
+
             transform.position = new Vector3(90, -3, 0);
             PlayerData.BackScene = "";
 
@@ -241,8 +283,31 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("Key"))
         {
             isKey = true;
+            Destroy(collision.gameObject);
+            Key.gameObject.SetActive(true);
         }
     }
+
+    // 封裝原本重複的傳送代碼
+    void PerformTeleport(Collider2D collision)
+    {
+        Portal portal = collision.GetComponent<Portal>();
+        //暫停時間
+        PlayerData.TimerPaused = true;
+        // 記錄目前時間（Timer OnDestroy()會做，不過這裡再做一次保險）
+        PlayerData.PauseTimeS = FindFirstObjectByType<Timer>().GetNowTimeS();
+        PlayerData.PauseTimeM = FindFirstObjectByType<Timer>().GetNowTimeM();
+        isPor = true;
+        PlayerData.BackScene = SceneManager.GetActiveScene().name;
+
+        if (portal != null)
+        {
+            GameManager.Instance.SceneChange(portal.AsceneName);
+            // 注意：SceneChange 後會載入新場景，新場景的 Player 執行 Start() 時
+            // 就會根據 InitPlayer.playerForm 自動換裝了。
+        }
+    }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
@@ -308,7 +373,7 @@ public class PlayerMovement : MonoBehaviour
                 movement = speed;
                 ani.SetBool("run", true);
                 //旋轉整個物件的座標
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
                 isflip = false;
             }
             else if (Input.GetKey(KeyCode.A))
@@ -316,7 +381,7 @@ public class PlayerMovement : MonoBehaviour
                 movement = -speed;
                 ani.SetBool("run", true);
                 //旋轉整個物件的座標
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-1.3f, 1.3f, 1.3f);
                 isflip = true;
             }
             else
@@ -353,6 +418,16 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (HP == 0)
+        {
+            isGameOver = true;
+        }
+
+        //鑰匙消失
+        if (PlayerLock.isUnlock)
+        {
+            Key.SetActive(false);
+        }
         
         //修理機器
         if (textfix != null && textfix.isFixable && !isFixing)
@@ -369,11 +444,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (!isflip)
                 {
-                    targetRotation = Quaternion.Euler(0, 0, -60);
+                    targetRotation = Quaternion.Euler(0, 0, -angel);
                 }
                 else
                 {
-                    targetRotation = Quaternion.Euler(0, 0, 60);
+                    targetRotation = Quaternion.Euler(0, 0, angel);
                 }
                 weapon.SetActive(true);
                 rotatingToTarget = true;
@@ -441,6 +516,7 @@ public class PlayerMovement : MonoBehaviour
         if (HP < 0)
         {
             HP = 0;
+            
         }
         if (HeartHp != null)
             HeartHp.UpdateHearts(HP, max_hp);

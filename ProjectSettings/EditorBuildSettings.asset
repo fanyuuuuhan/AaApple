@@ -24,7 +24,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Init2.unity
     guid: 04927c65ce05e53459c0c98a74fa828c
   - enabled: 1
-    path: Assets/Scenes/GamSugar.unity
+    path: Assets/Scenes/GameSugar.unity
+    guid: db20d9c8c53f24b45bae43d77ba40a19
+  - enabled: 1
+    path: Assets/Scenes/SugarHide.unity
     guid: 9e600c614b361ba49bd826f3f140f460
   - enabled: 1
     path: Assets/Scenes/Init3.unity

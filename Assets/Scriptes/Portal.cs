@@ -5,11 +5,4 @@ public class Portal : MonoBehaviour
 {
     public string AsceneName;
 
-    void Update()
-    {
-        if (MonsterBossHit.bossdie)
-        {
-            Destroy(gameObject);
-        }
-    }
 }

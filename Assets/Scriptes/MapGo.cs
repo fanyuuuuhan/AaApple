@@ -32,15 +32,27 @@ public class MapUIClickHandler : MonoBehaviour,
         {
             SceneManager.LoadScene("Init2");
         }
-        if (sceneName == "GameButter")
+        if (sceneName == "GameButter" && MapUnlock.isMapUnlock)
         {
             SceneManager.LoadScene("Init3");
+        }
+        else if (!MapUnlock.isMapUnlock) 
+        {
+            return;
         }
 
     }
 
     void Update()
     {
+        GameObject[] oldUIs = GameObject.FindGameObjectsWithTag("Manager");
+        foreach (GameObject ui in oldUIs)
+        {
+            // 確保這不是 GameManager 所在的物件，也不是 Map 場景本身的 UI
+            // 如果你的 UI 都有 DontDestroyOnLoad，這行就能抓到它們
+            Destroy(ui);
+        }
+
         if (ishover)
         {
             // 放大

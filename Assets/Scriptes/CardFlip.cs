@@ -16,10 +16,13 @@ public class CardFlip : MonoBehaviour
     public bool isUnlock = false;
     public string cardKey; // 一樣的 Key
 
+
+
     void Start()
     {
         // 測試用：清除存檔
-        //PlayerPrefs.DeleteKey(cardKey);
+
+        PlayerPrefs.DeleteKey(cardKey);
 
         //讀取是否解鎖
         isUnlock = PlayerPrefs.GetInt(cardKey, 0) == 1;

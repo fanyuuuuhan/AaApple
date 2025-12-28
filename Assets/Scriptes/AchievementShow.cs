@@ -13,4 +13,6 @@ public class AchievementShow : MonoBehaviour
     {
         achievement.gameObject.SetActive(false); 
     }
+
+
 }

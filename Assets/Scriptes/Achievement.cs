@@ -11,7 +11,7 @@ public class Achievement : MonoBehaviour
         {
             PlayerPrefs.SetInt(cardKey, 1);
             PlayerPrefs.Save();
-            Debug.Log($"[AppleGo] {cardKey} §w¶s¿…");
+
         }
     }
 

@@ -12,19 +12,10 @@ public class MonsterBossHit : MonoBehaviour
     //Boss¦º¤`
     public static bool bossdie=false;
 
-
-    public float AttackStop = 0.5f;
     public float HurtStop = 0.5f;
 
     Animator ani;
 
-
-    IEnumerator AttackPause()
-    {
-        ani.SetBool("attack", true);
-        yield return new WaitForSeconds(AttackStop);
-        ani.SetBool("attack", false);
-    }
     //¨ü¶Ë°±¹y
     IEnumerator HurtPause()
     {
@@ -68,7 +59,6 @@ public class MonsterBossHit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(AttackPause());
         if (hp <= 0)
         {
             bossdie = true;

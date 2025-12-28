@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerLock : MonoBehaviour
 {
     public GameObject NeedKey;
-
+    public static bool isUnlock = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,6 +16,7 @@ public class PlayerLock : MonoBehaviour
             }
             else
             {
+                isUnlock = true;
                 Destroy(gameObject);
             }
         }

@@ -27,9 +27,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-    void Start()
+    public void Init()
     {
+        GameObject[] oldUIs = GameObject.FindGameObjectsWithTag("Canvas");
+        foreach (GameObject ui in oldUIs)
+        {
+            // 確保這不是 GameManager 所在的物件，也不是 Map 場景本身的 UI
+            // 如果你的 UI 都有 DontDestroyOnLoad，這行就能抓到它們
+            Destroy(ui);
+        }
+        if (Player != null) Destroy(Player);
 
         // --- (初始化與保護物件) ---
         //UI物件
@@ -43,7 +50,7 @@ public class GameManager : MonoBehaviour
 
         // 抓 HeartHp
         HeartHp heartHp = PlayerUI.GetComponentInChildren<HeartHp>();
-        
+
         // 請確認你的收集物 TextMeshProUGUI 的路徑
 
         if (heartHp != null)
@@ -52,6 +59,13 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(Player);
+        DontDestroyOnLoad(PlayerUI);
+    }
+    
+    void Start()
+    {
+
+        
 
     }
 
@@ -88,7 +102,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 當場景是你要播放跑步進場的場景
-        if (scene.name == "GameApple" && !MonsterBossHit.bossdie)
+        if ((scene.name == "GameApple"|| scene.name == "GameSugar") && !MonsterBossHit.bossdie)
         {
             PlayerMovement pm = Player.GetComponent<PlayerMovement>();
             pm.PlayEnterAnimation();   //呼叫入場動畫

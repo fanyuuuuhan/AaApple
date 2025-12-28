@@ -54,7 +54,8 @@ public class ESC : MonoBehaviour
         Timer.GameOver.gameObject.SetActive(false);
         Time.timeScale = 1f;
         MonsterBossHit.bossdie = false;
-        
+        SpawnPoint.isPlayerGO = false;
+
         PlayerData.RestartScene = SceneManager.GetActiveScene().name;
         Debug.Log("Restart：記錄的 RestartScene = " + PlayerData.RestartScene);
 
@@ -67,6 +68,8 @@ public class ESC : MonoBehaviour
         PlayerData.TimerPaused = false;
         PlayerMovement.isEndStar = false;
         PlayerMovement.isGameOver = false;
+        PlayerMovement.collection = 0;
+        PlayerMovement.isKey = false;
 
         if (GameManager.Instance != null && GameManager.Instance.Player != null)
         {
@@ -89,11 +92,19 @@ public class ESC : MonoBehaviour
     public void Setting()
     {
         setting.gameObject.SetActive(true);
+        eSC.gameObject.SetActive(false);
     }
 
     public void BackMap()
     {
         Time.timeScale = 1f;
+        //刪除舊的UI
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance.Player != null) Destroy(GameManager.Instance.Player);
+            if (GameManager.Instance.PlayerUI != null) Destroy(GameManager.Instance.PlayerUI);
+        }
+
         SceneManager.LoadScene("Map");
         eSC.gameObject.SetActive(false);
         Timer.EndStar.gameObject.SetActive(false);
@@ -101,6 +112,9 @@ public class ESC : MonoBehaviour
         PlayerMovement.isEndStar = false;
         PlayerMovement.isGameOver = false;
         MonsterBossHit.bossdie = false;
+        SpawnPoint.isPlayerGO = false;
+        PlayerMovement.collection = 0;
+        PlayerMovement.isKey = false;
 
 
         //重置UI
@@ -131,6 +145,7 @@ public class ESC : MonoBehaviour
     public void CloseSetting()
     {
         setting.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 
 }
