@@ -27,6 +27,8 @@ TagManager:
   - SugarBack
   - Manager
   - GoldSugar
+  - GameButter
+  - Box
   layers:
   - Default
   - TransparentFX

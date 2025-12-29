@@ -77,8 +77,7 @@ public class MonsterHit : MonoBehaviour
             isMoving = true;
             ani.SetBool("move", true);
             yield return new WaitForSeconds(2f);
-
-            
+           
         }
     }
     //攻擊停頓
@@ -179,6 +178,22 @@ public class MonsterHit : MonoBehaviour
         }
 
         if (!isMoving) return;
+
+        if (CompareTag("Monster"))
+        {
+            //怪物移動
+            transform.position += new Vector3(-speed * direction * Time.deltaTime, 0, 0);
+            if (transform.position.x > startX + moveRange)
+            {
+                direction = 1;
+                sr.flipX = direction < 0;
+            }
+            else if (transform.position.x < startX - moveRange)
+            {
+                direction = -1;
+                sr.flipX = direction < 0;
+            }
+        }
 
        //遠攻怪物轉向
         if (CompareTag("FarMonster"))

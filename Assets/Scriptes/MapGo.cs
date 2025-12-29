@@ -32,7 +32,7 @@ public class MapUIClickHandler : MonoBehaviour,
         {
             SceneManager.LoadScene("Init2");
         }
-        if (sceneName == "GameButter" && MapUnlock.isMapUnlock)
+        if (sceneName == "NPC" && MapUnlock.isMapUnlock)
         {
             SceneManager.LoadScene("Init3");
         }

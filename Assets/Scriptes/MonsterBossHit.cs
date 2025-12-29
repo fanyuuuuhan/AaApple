@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using static MonsterHit;
 
 public class MonsterBossHit : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MonsterBossHit : MonoBehaviour
 
     //Boss死亡
     public static bool bossdie=false;
+    public string monsterID;
 
     public float HurtStop = 0.5f;
 
@@ -30,6 +32,12 @@ public class MonsterBossHit : MonoBehaviour
     {
         ani = GetComponent<Animator>();
         hp = 20;
+
+        //怪物是否已死亡紀錄
+        if (MonsterDie.DeadMonster.Contains(monsterID))
+        {
+            gameObject.SetActive(false); // 如果已經死過，直接隱藏
+        }
 
     }
 
@@ -61,6 +69,11 @@ public class MonsterBossHit : MonoBehaviour
     {
         if (hp <= 0)
         {
+            if (!string.IsNullOrEmpty(monsterID))
+            {
+                MonsterDie.DeadMonster.Add(monsterID);
+            }
+
             bossdie = true;
             Destroy(this.gameObject);
             Achievement.SetActive(true);

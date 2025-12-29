@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ESC : MonoBehaviour
 {
@@ -71,22 +72,10 @@ public class ESC : MonoBehaviour
         PlayerMovement.collection = 0;
         PlayerMovement.isKey = false;
 
-        if (GameManager.Instance != null && GameManager.Instance.Player != null)
-        {
-            PlayerMovement pm = GameManager.Instance.Player.GetComponent<PlayerMovement>();
-            if (pm != null)
-            {
-                PlayerMovement.HP = InitPlayer.HP;
-                pm.max_hp = InitPlayer.maxHP;
+        // 清空死亡紀錄
+        MonsterHit.MonsterDie.DeadMonster.Clear();
 
-                //正確重設愛心血量
-                if (pm.HeartHp != null)
-                    pm.HeartHp.UpdateHearts(PlayerMovement.HP, pm.max_hp);
-
-            }
-        }
-
-        SceneManager.LoadScene("Init");
+        StartCoroutine(RestartBTN());
     }
 
     public void Setting()
@@ -115,6 +104,9 @@ public class ESC : MonoBehaviour
         SpawnPoint.isPlayerGO = false;
         PlayerMovement.collection = 0;
         PlayerMovement.isKey = false;
+
+        // 清空死亡紀錄
+        MonsterHit.MonsterDie.DeadMonster.Clear();
 
 
         //重置UI
@@ -148,4 +140,10 @@ public class ESC : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
+
+    IEnumerator RestartBTN()
+    {
+        yield return new WaitForEndOfFrame();
+        SceneManager.LoadScene("Init");
+    }
 }

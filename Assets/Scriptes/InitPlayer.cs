@@ -16,15 +16,20 @@ public class InitPlayer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        PlayerData.InitScene = SceneManager.GetActiveScene().name;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Init(); // 這會重新 Instantiate(PlayerUIPrefab)
+        }
     }
 
     void Update()
     {
-        if (PlayerData.NextSceneName != "Map"|| PlayerData.RestartScene != "Map" || PlayerData.PorScene != null)
+        if ((PlayerData.NextSceneName != "Map"|| PlayerData.RestartScene != "Map" || PlayerData.PorScene != null) && (!string.IsNullOrEmpty(PlayerData.RestartScene) || !string.IsNullOrEmpty(PlayerData.NextSceneName)))
         {
             StartCoroutine(LoadNextScene());
         }
+        
     }
 
     IEnumerator LoadNextScene()

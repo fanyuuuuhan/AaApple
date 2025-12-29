@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 當場景是你要播放跑步進場的場景
-        if ((scene.name == "GameApple"|| scene.name == "GameSugar") && !MonsterBossHit.bossdie)
+        if ((scene.name == "GameApple"|| scene.name == "GameSugar" || scene.name == "NPC" || scene.name == "GameButter") && !MonsterBossHit.bossdie)
         {
             PlayerMovement pm = Player.GetComponent<PlayerMovement>();
             pm.PlayEnterAnimation();   //呼叫入場動畫

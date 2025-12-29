@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SugarHide.unity
     guid: 9e600c614b361ba49bd826f3f140f460
   - enabled: 1
+    path: Assets/Scenes/NPC.unity
+    guid: f7b09c502e3646d4696e371c6f8c72cb
+  - enabled: 1
     path: Assets/Scenes/Init3.unity
     guid: 20d9b7a87f0a1184bb958a2e1ceb69e7
   - enabled: 1

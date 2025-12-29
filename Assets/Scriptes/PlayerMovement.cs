@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -54,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     //踩到奶油滑滑控制
     public float butterSpeed = 0.8f;
     public float butterLerp = 1.5f;
+    public float butterExitTime = 0.5f;
+    float buttertime = 0f;
     bool isButter = false;
 
     //機器修復
@@ -88,12 +91,19 @@ public class PlayerMovement : MonoBehaviour
     public static bool isEndStar = false;
     public static bool isGameOver = false;
 
+    //音效
+    public AudioClip crutch;
+    public AudioClip teeth;
+    private AudioSource PlayerAudio;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
         ani= GetComponent<Animator>();
         sr= GetComponent<SpriteRenderer>();
+
+        PlayerAudio = GetComponent<AudioSource>();
 
         UpdatePlayerAppearance();
 
@@ -201,11 +211,20 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(74, 1, 0);
             PlayerData.BackScene = "";
         }
+        //轉移場景-GameButter
+        if (collision.CompareTag("GameButter"))
+        {
+            Portal portal = collision.GetComponent<Portal>();
+            InitPlayer.playerForm = 0;
+            UpdatePlayerAppearance();
+            GameManager.Instance.SceneChange(portal.AsceneName);
+        }
 
         //奶油偵測
         if (collision.CompareTag("Butter"))
         {
             isButter = true;
+            buttertime = butterExitTime;
         }
         //機器偵測
         if (collision.CompareTag("Machine"))
@@ -308,6 +327,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            isGround = true;
+            ani.SetBool("jump", false);
+        }
+    }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ground"))
@@ -389,18 +417,39 @@ public class PlayerMovement : MonoBehaviour
                 movement = 0f;
                 ani.SetBool("run", false);
             }
-            if (!isButter)
+
+            //butter移動
+
+            // 是否仍在滑行狀態（踩到 or 剛離開）
+            bool sliding = isButter || buttertime > 0f;
+
+            // 如果不在 Butter，慢慢扣殘留時間
+            if (!isButter && buttertime > 0f)
             {
+                buttertime -= Time.fixedDeltaTime;
+            }
+
+            if (!sliding)
+            {
+                //完全正常控制
                 rb.linearVelocityX = movement;
             }
             else
             {
-                float target = movement * butterSpeed;
-                rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, target, Time.deltaTime * butterLerp); //平滑過度速度
-            }
-            
+                //滑行（包含殘留）
+                float butterTarget = movement * butterSpeed;
 
-            if (Input.GetKey(KeyCode.Space) && isGround == true)
+                rb.linearVelocityX = Mathf.Lerp(
+                    rb.linearVelocityX,
+                    butterTarget,
+                    Time.fixedDeltaTime * butterLerp
+                );
+            }
+
+
+
+
+            if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
             {
                 rb.linearVelocity = new Vector2(movement, jump);
                 ani.SetBool("jump", true);
@@ -423,6 +472,8 @@ public class PlayerMovement : MonoBehaviour
             isGameOver = true;
         }
 
+        ani.SetFloat("Jump", rb.linearVelocityY);
+
         //鑰匙消失
         if (PlayerLock.isUnlock)
         {
@@ -442,6 +493,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.M) || Input.GetMouseButtonDown(0)) && !rotatingToTarget && !turnback)
             {
+                PlayerAudio.PlayOneShot(crutch, 1.0f);
                 if (!isflip)
                 {
                     targetRotation = Quaternion.Euler(0, 0, -angel);
@@ -492,7 +544,7 @@ public class PlayerMovement : MonoBehaviour
             if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(1)) && !TeethControl.isthrow)
             {
                 GameObject tooth = Instantiate(Falsetooth, transform.position, Quaternion.identity);
-
+                PlayerAudio.PlayOneShot(teeth, 1.0f);
                 //改成用旋轉判定方向，而不是改 scale
                 if (transform.localScale.x < 0)
                 {
@@ -572,4 +624,5 @@ public class PlayerMovement : MonoBehaviour
         isFixing = false;
         textfix.isFixable = false;
     }
+
 }

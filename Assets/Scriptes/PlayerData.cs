@@ -7,6 +7,7 @@ public class PlayerData : MonoBehaviour
     public static string PorScene = ""; //傳送的場景
     public static string NowScene = ""; //Map返回
     public static string BackScene = "";
+    public static string InitScene = ""; //init場景
 
     //計時器
     public static float PauseTimeS = 0;
