@@ -15,7 +15,7 @@ public class GameStar : MonoBehaviour
     public  TextMeshProUGUI StarNum;
 
 
-    // 當地圖場景載入，這個物件出現時就執行顯示
+    // ???a????????J?A?o?????X?{??N???????
     void Start()
     {
         AllStar = PlayerData.AllOfStar;
@@ -24,18 +24,18 @@ public class GameStar : MonoBehaviour
 
     public void UpdateStarDisplay()
     {
-        // 測試用：清除存檔
-        PlayerPrefs.DeleteKey(Gamekey);
+        // ????ΡG?M???s??
+        //PlayerPrefs.DeleteKey(Gamekey);
 
-        // 從存檔讀取星數 (預設為 0)
+        // ?q?s??????P?? (?w?]?? 0)
         int stars = PlayerPrefs.GetInt(Gamekey, 0);
 
-        // 先把所有圖片隱藏
+        // ?????????????
         Star1.SetActive(false);
         Star2.SetActive(false);
         Star3.SetActive(false);
 
-        // 根據星數顯示對應的圖片
+        // ???P?????????????
         switch (stars)
         {
             case 1:
@@ -51,7 +51,7 @@ public class GameStar : MonoBehaviour
                 AllStar = AllStar + 3;
                 break;
             default:
-                // 0 顆星時不顯示任何圖片，或你可以加一張「未過關」的灰圖
+                // 0 ???P????????????A?ΧA?i?H?[?@?i?u???L???v?????
                 break;
         }
     }
@@ -59,6 +59,6 @@ public class GameStar : MonoBehaviour
     void Update()
     {
         PlayerData.AllOfStar = AllStar;
-        StarNum.text = $"{AllStar:f0}";
+        // StarNum.text = $"{AllStar:f0}";
     }
 }

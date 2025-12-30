@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems; //UI用的scripts
+using UnityEngine.EventSystems; //UI???scripts
 
 public class MapUIClickHandler : MonoBehaviour,
     IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public string sceneName;
 
-    //hover放大
+    //hover??j
     float hoverspeed = 8f;
     public float hoverscale = 1.5f;
     bool ishover = false;
@@ -20,7 +20,7 @@ public class MapUIClickHandler : MonoBehaviour,
         Destroy(player);
     }
 
-    public void OnPointerClick(PointerEventData eventData) //點擊事件
+    public void OnPointerClick(PointerEventData eventData) //?I?????
     {
         PlayerData.NextSceneName = sceneName;
 
@@ -48,14 +48,14 @@ public class MapUIClickHandler : MonoBehaviour,
         GameObject[] oldUIs = GameObject.FindGameObjectsWithTag("Manager");
         foreach (GameObject ui in oldUIs)
         {
-            // 確保這不是 GameManager 所在的物件，也不是 Map 場景本身的 UI
-            // 如果你的 UI 都有 DontDestroyOnLoad，這行就能抓到它們
+            // ?T?O?o???O GameManager ??b??????A?]???O Map ?????????? UI
+            // ?p?G?A?? UI ???? DontDestroyOnLoad?A?o??N??????
             Destroy(ui);
         }
 
         if (ishover)
         {
-            // 放大
+            // ??j
             transform.localScale = Vector3.Lerp(
                 transform.localScale,
                 originalScale * hoverscale,
@@ -64,7 +64,7 @@ public class MapUIClickHandler : MonoBehaviour,
         }
         else
         {
-            // 還原
+            // ???
             transform.localScale = Vector3.Lerp(
                 transform.localScale,
                 originalScale,

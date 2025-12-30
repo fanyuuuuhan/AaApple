@@ -2,21 +2,20 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public static string NextSceneName = ""; //Map時的場景
-    public static string RestartScene = "";   // Restart 時要回的場景
-    public static string PorScene = ""; //傳送的場景
-    public static string NowScene = ""; //Map返回
+    public static string NextSceneName = ""; //Map???????
+    public static string RestartScene = "";   // Restart ??n?^??????
+    public static string PorScene = ""; //??e??????
+    public static string NowScene = ""; //Map??^
     public static string BackScene = "";
-    public static string InitScene = ""; //init場景
+    public static string InitScene = ""; //init????
 
-    //計時器
+    //?p???
     public static float PauseTimeS = 0;
     public static float PauseTimeM = 0;
     public static float PauseSTime = 0;
     public static float PauseMTime = 0;
     public static bool TimerPaused = false;
 
-    //總星星數
+    //?`?P?P??
     public static float AllOfStar = 0;
-
 }

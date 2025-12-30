@@ -16,10 +16,7 @@ public class StarLevel : MonoBehaviour
 
     public TextMeshProUGUI Collection;
 
-    //UI²¾°Êªk
-    RectTransform rect;
-    public float speed = 50;
-    bool StarMove = false;
+
 
     public float Level1 = 0;
     public float Level2 = 0;
@@ -36,7 +33,7 @@ public class StarLevel : MonoBehaviour
 
     void Start()
     {
-        rect = GetComponent<RectTransform>();
+
     }
 
 
@@ -46,21 +43,8 @@ public class StarLevel : MonoBehaviour
         if (Timer.StarShow)
         {
             Timer.StarShow = false;
-            StarMove = true;
+            StartCoroutine(DelayAction());
             
-        }
-        if (StarMove)
-        {
-            if (rect.anchoredPosition.y > 0)
-            {
-                rect.anchoredPosition += new Vector2(0, -speed * Time.deltaTime);
-            }
-            else if (rect.anchoredPosition.y < 0)
-            {
-                rect.anchoredPosition = Vector2.zero;
-                StarMove = false;
-                StartCoroutine(DelayAction());
-            }
         }
         timerS.text = Mathf.Floor(Timer.nowTimeS).ToString();
         timerM.text = Mathf.Floor(Timer.nowTimeM).ToString();

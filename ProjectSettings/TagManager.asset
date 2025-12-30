@@ -29,6 +29,7 @@ TagManager:
   - GoldSugar
   - GameButter
   - Box
+  - MachineHint
   layers:
   - Default
   - TransparentFX
@@ -63,6 +64,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2487540737
+    locked: 0
+  - name: Mountains
+    uniqueID: 3979810515
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

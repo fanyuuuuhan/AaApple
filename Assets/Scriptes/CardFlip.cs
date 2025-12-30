@@ -22,7 +22,7 @@ public class CardFlip : MonoBehaviour
     {
         // 測試用：清除存檔
 
-        PlayerPrefs.DeleteKey(cardKey);
+        //PlayerPrefs.DeleteKey(cardKey);
 
         //讀取是否解鎖
         isUnlock = PlayerPrefs.GetInt(cardKey, 0) == 1;

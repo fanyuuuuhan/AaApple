@@ -32,26 +32,26 @@ public class GameManager : MonoBehaviour
         GameObject[] oldUIs = GameObject.FindGameObjectsWithTag("Canvas");
         foreach (GameObject ui in oldUIs)
         {
-            // 確保這不是 GameManager 所在的物件，也不是 Map 場景本身的 UI
-            // 如果你的 UI 都有 DontDestroyOnLoad，這行就能抓到它們
+            // ?T?O?o???O GameManager ??b??????A?]???O Map ?????????? UI
+            // ?p?G?A?? UI ???? DontDestroyOnLoad?A?o??N??????
             Destroy(ui);
         }
         if (Player != null) Destroy(Player);
 
-        // --- (初始化與保護物件) ---
-        //UI物件
+        // --- (??l??P?O?@????) ---
+        //UI????
         PlayerUI = Instantiate(PlayerUIPrefab);
         collectionGetInstance = PlayerUI.GetComponentInChildren<CollectionGet>();
 
-        //玩家物件
+        //???a????
         Player = Instantiate(PlayerPrefab);
         PlayerMovement pm = Player.GetComponent<PlayerMovement>();
-        pm.CollectionGet = collectionGetInstance; // 直接引用
+        pm.CollectionGet = collectionGetInstance; // ???????
 
-        // 抓 HeartHp
+        // ?? HeartHp
         HeartHp heartHp = PlayerUI.GetComponentInChildren<HeartHp>();
 
-        // 請確認你的收集物 TextMeshProUGUI 的路徑
+        // ??T?{?A???????? TextMeshProUGUI ?????|
 
         if (heartHp != null)
         {
@@ -101,11 +101,11 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 當場景是你要播放跑步進場的場景
+        // ???????O?A?n????]?B?i????????
         if ((scene.name == "GameApple"|| scene.name == "GameSugar" || scene.name == "NPC" || scene.name == "GameButter") && !MonsterBossHit.bossdie)
         {
             PlayerMovement pm = Player.GetComponent<PlayerMovement>();
-            pm.PlayEnterAnimation();   //呼叫入場動畫
+            pm.PlayEnterAnimation();   //?I?s?J????e
         }
     }
 

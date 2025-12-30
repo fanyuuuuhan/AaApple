@@ -9,10 +9,14 @@ public class TeethControl : MonoBehaviour
     private bool returning = false;
     public static bool isthrow = false;
 
+
+    Animator playAni;
+
     void Start()
     {
         startPos = transform.position;
         isthrow = true;
+        playAni = player.GetComponent<Animator>();
     }
 
     void Update()
@@ -25,6 +29,7 @@ public class TeethControl : MonoBehaviour
             // 超過距離就回頭
             if (Vector3.Distance(startPos, transform.position) >= maxDistance)
                 returning = true;
+
         }
         else
         {
@@ -35,6 +40,7 @@ public class TeethControl : MonoBehaviour
             if (Vector3.Distance(transform.position, player.position) < 0.05f)
             {
                 isthrow = false;
+                playAni.SetBool("attack", false);
                 Destroy(gameObject);
             }
         }

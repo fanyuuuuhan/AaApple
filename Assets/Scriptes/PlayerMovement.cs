@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     public float knockTime = 0.5f;
 
     //攻擊偵測
-    public GameObject weapon;      // 指定要旋轉的物件
+    public GameObject weapon;     // 指定要旋轉的物件
     public float rotateSpeed = 200f; // 旋轉速度（度/秒）
     private bool rotatingToTarget = false;
     bool turnback = false;
@@ -60,10 +60,11 @@ public class PlayerMovement : MonoBehaviour
     bool isButter = false;
 
     //機器修復
-    MachineFix textfix;
-    bool isFixing = false;
-    public Image CanvaFix;
-    public Image FixBar;
+    Machine machine;
+    public bool isMelted = true;
+    // bool isFixing = false;
+    // public Image CanvaFix;
+    // public Image FixBar;
 
     //偵測是否踩到傳送點
     public static bool isPor = false;
@@ -94,9 +95,10 @@ public class PlayerMovement : MonoBehaviour
     //音效
     public AudioClip crutch;
     public AudioClip teeth;
+    public AudioClip hurt;
     private AudioSource PlayerAudio;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
@@ -126,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         // 播放跑步動畫
         ani.SetBool("run", true);
 
-        // 自動向右跑秒（可更動）       
+        // 自動向右跑秒（可更動）
         while (timer < enterTime)
         {
             rb.linearVelocity = new Vector2(speed, rb.linearVelocity.y);
@@ -142,6 +144,13 @@ public class PlayerMovement : MonoBehaviour
 
         // 啟用玩家操作
         isEnter = false;
+    }
+    //受傷動畫
+    IEnumerator HurtPause()
+    {
+        ani.SetBool("hurt", true);
+        yield return new WaitForSeconds(1f);
+        ani.SetBool("hurt", false);
     }
 
     // 更新外觀的方法
@@ -185,12 +194,17 @@ public class PlayerMovement : MonoBehaviour
             goldSugar++;
             Destroy(collision.gameObject);
         }
-        
+
         //轉移場景-AppleGo
         if (collision.CompareTag("AppleGo"))
         {
             InitPlayer.playerForm = 1;
             UpdatePlayerAppearance();
+            //暫停時間
+            PlayerData.TimerPaused = true;
+            // 記錄目前時間（Timer OnDestroy()會做，不過這裡再做一次保險）
+            PlayerData.PauseTimeS = FindFirstObjectByType<Timer>().GetNowTimeS();
+            PlayerData.PauseTimeM = FindFirstObjectByType<Timer>().GetNowTimeM();
             PerformTeleport(collision);
             transform.position = new Vector3(-7, 6, 0);
         }
@@ -229,27 +243,28 @@ public class PlayerMovement : MonoBehaviour
         //機器偵測
         if (collision.CompareTag("Machine"))
         {
-            textfix = collision.GetComponent<MachineFix>();
-            if (textfix != null && textfix.isFixable) //MachineFix確認有啟動並且機器可以修理
-            {
-                Debug.Log("機器偵測");
-                textfix.ShowText();
-            }
-            else
-            {
-                textfix.FixOver.SetActive(true);
-            }
-            
+            machine = collision.GetComponent<Machine>();
+            // if (textfix != null && textfix.isFixable) //MachineFix?T?{?????aB?????i?H??z
+            // {
+            //     Debug.Log("machine IN");
+            //     textfix.ShowText();
+            // }
+            // else
+            // {
+            //     textfix.FixOver.SetActive(true);
+            // }
         }
         //怪物遠攻偵測
         if (collision.CompareTag("MonsterFar"))
         {
+            PlayerAudio.PlayOneShot(hurt, 1.0f);
+            StartCoroutine(HurtPause());
             TakeHit(1);
 
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
 
-            //手傷害後反彈
+            //受傷害後反彈
             isKnock = true;
             Invoke(nameof(ResetKnock), knockTime);
             rb.linearVelocity = new Vector2((transform.position.x < collision.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
@@ -257,6 +272,8 @@ public class PlayerMovement : MonoBehaviour
         //BOSS攻擊
         if (collision.CompareTag("BossHit"))
         {
+            PlayerAudio.PlayOneShot(hurt, 1.0f);
+            StartCoroutine(HurtPause());
             Destroy(collision.gameObject);
             TakeHit(4);
             
@@ -264,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
 
-            //手傷害後反彈
+            //受傷害後反彈
             isKnock = true;
             Invoke(nameof(ResetKnock), knockTime);
             rb.linearVelocity = new Vector2((transform.position.x < collision.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
@@ -310,12 +327,7 @@ public class PlayerMovement : MonoBehaviour
     // 封裝原本重複的傳送代碼
     void PerformTeleport(Collider2D collision)
     {
-        Portal portal = collision.GetComponent<Portal>();
-        //暫停時間
-        PlayerData.TimerPaused = true;
-        // 記錄目前時間（Timer OnDestroy()會做，不過這裡再做一次保險）
-        PlayerData.PauseTimeS = FindFirstObjectByType<Timer>().GetNowTimeS();
-        PlayerData.PauseTimeM = FindFirstObjectByType<Timer>().GetNowTimeM();
+        Portal portal = collision.GetComponent<Portal>();        
         isPor = true;
         PlayerData.BackScene = SceneManager.GetActiveScene().name;
 
@@ -346,11 +358,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isButter = false;
         }
-        if (collision.CompareTag("Machine") && textfix != null)
+        if (collision.CompareTag("Machine") && machine != null)
         {
-            Debug.Log("機器偵測離開");
-            textfix.HideText();
-            textfix = null;
+            // Debug.Log("machine out");
+            // textfix.HideText();
+            machine = null;
         }
 
         
@@ -361,6 +373,8 @@ public class PlayerMovement : MonoBehaviour
         //小怪碰觸受傷
         if (coll.gameObject.tag == "Monster"&& !noHit)
         {
+            PlayerAudio.PlayOneShot(hurt, 1.0f);
+            StartCoroutine(HurtPause());
             print(coll.gameObject.name);
             TakeHit(1);
 
@@ -368,7 +382,7 @@ public class PlayerMovement : MonoBehaviour
             noHit = true;
             Invoke(nameof(ResetHit), noHitTime); // 自動在 noHitTime 秒後解除無敵
 
-            //手傷害後反彈
+            //受傷害後反彈
             isKnock = true;
             Invoke(nameof(ResetKnock), knockTime);
             rb.linearVelocity = new Vector2((transform.position.x < coll.transform.position.x ? -1 : 1) * knockback, rb.linearVelocity.y);
@@ -418,8 +432,6 @@ public class PlayerMovement : MonoBehaviour
                 ani.SetBool("run", false);
             }
 
-            //butter移動
-
             // 是否仍在滑行狀態（踩到 or 剛離開）
             bool sliding = isButter || buttertime > 0f;
 
@@ -445,15 +457,7 @@ public class PlayerMovement : MonoBehaviour
                     Time.fixedDeltaTime * butterLerp
                 );
             }
-
-
-
-
-            if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
-            {
-                rb.linearVelocity = new Vector2(movement, jump);
-                ani.SetBool("jump", true);
-            }            
+                   
         }
    
     }
@@ -479,13 +483,13 @@ public class PlayerMovement : MonoBehaviour
         {
             Key.SetActive(false);
         }
-        
+
         //修理機器
-        if (textfix != null && textfix.isFixable && !isFixing)
+        if (machine != null && machine.status == 0)
         {
-            if (Input.GetKeyDown(KeyCode.M) || Input.GetMouseButtonDown(0))
+            if (Input.GetKey(KeyCode.M) || Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(FixMachine());//等待3秒、撥放修理動畫
+                StartCoroutine(machine.FixMachine());//等待3秒、撥放修理動畫
             }
         }
         // 按下 M 鍵攻擊+旋轉
@@ -536,13 +540,14 @@ public class PlayerMovement : MonoBehaviour
                 if (Quaternion.Angle(weapon.transform.rotation, targetRotation) < 0.1f)
                 {
                     weapon.transform.rotation = targetRotation;
-                    turnback = false; // 完成回轉
+                    turnback = false;// 完成回轉
                     weapon.SetActive(false);
                 }
             }
             //發射假牙
             if ((Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(1)) && !TeethControl.isthrow)
             {
+                ani.SetBool("attack", true);
                 GameObject tooth = Instantiate(Falsetooth, transform.position, Quaternion.identity);
                 PlayerAudio.PlayOneShot(teeth, 1.0f);
                 //改成用旋轉判定方向，而不是改 scale
@@ -559,6 +564,13 @@ public class PlayerMovement : MonoBehaviour
                 tooth.GetComponent<TeethControl>().player = this.transform;
                 TeethControl.isthrow = true;
             }
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
+        {
+            rb.linearVelocity = new Vector2(movement, jump);
+            ani.SetBool("jump", true);
         }
     }
 
@@ -574,55 +586,5 @@ public class PlayerMovement : MonoBehaviour
             HeartHp.UpdateHearts(HP, max_hp);
     }
 
-    //修理機器
-    IEnumerator FixMachine()
-    {
-        isFixing = true;
-
-        // 停止玩家所有控制
-        float oldSpeed = speed;
-        float oldJump = jump;
-        speed = 0;
-        jump = 0;
-        rb.linearVelocity = Vector2.zero;
-
-        if(textfix!=null)
-        {
-            textfix.StartFix();
-            CanvaFix.gameObject.SetActive(true);
-            FixBar.gameObject.SetActive(true);
-        }
-
-        float fixTime = 3f;   // 修理總時間
-        float currentFix = 0f; // 當前修理進度 0→fixTime
-
-        // 假設 FixBar 原本 scale.x = 0，最終 1
-        Vector3 startScale = FixBar.transform.localScale;
-        Vector3 endScale = new Vector3(1f, startScale.y, startScale.z);
-
-        while (currentFix < fixTime)
-        {
-            currentFix += Time.deltaTime;
-
-            // 直接用比例算 X 軸
-            float ratio = Mathf.Clamp01(currentFix / fixTime);
-            FixBar.transform.localScale = new Vector3(ratio, FixBar.transform.localScale.y, FixBar.transform.localScale.z);
-
-            yield return null;
-        }
-
-        // 確保最後填滿
-        FixBar.transform.localScale = endScale;
-
-        CanvaFix.gameObject.SetActive(false);
-        FixBar.gameObject.SetActive(false);
-
-        // 恢復移動能力
-        speed = oldSpeed;
-        jump = oldJump;
-
-        isFixing = false;
-        textfix.isFixable = false;
-    }
 
 }

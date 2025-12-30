@@ -231,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4408346642933319136}
-  - component: {fileID: 813210885164883344}
+  - component: {fileID: 5749067933189147958}
   m_Layer: 0
   m_Name: check
   m_TagString: Untagged
@@ -248,14 +248,14 @@ Transform:
   m_GameObject: {fileID: 5130688565769912042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.107, y: -0.663, z: 0}
+  m_LocalPosition: {x: 0.067, y: -0.854, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 195309230875390044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &813210885164883344
-BoxCollider2D:
+--- !u!58 &5749067933189147958
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -288,18 +288,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.041003466, y: -0.4217503}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.33222914, y: 0.15649939}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.20446461}
+  m_Radius: 0.2955354
 --- !u!1 &5651070218686248367
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,18 +430,18 @@ MonoBehaviour:
   weapon: {fileID: 69966919096790000}
   rotateSpeed: 250
   angel: 90
-  Falsetooth: {fileID: 1588650422132928501, guid: 1e5ee632d2352e14c9d8401f000465dd, type: 3}
+  Falsetooth: {fileID: 2427765561063602920, guid: febe0649497f6fc42b084a7be49952d7, type: 3}
   butterSpeed: 4
   butterLerp: 5
   butterExitTime: 1
-  CanvaFix: {fileID: 0}
-  FixBar: {fileID: 0}
+  isMelted: 1
   enterTime: 2
   Key: {fileID: 3610751961378364606}
   Fight: {fileID: 9100000, guid: 6e9e6e76aca7f7e42b2b4da80f36e534, type: 2}
   Cloak: {fileID: 9100000, guid: bed1959df7e7e634599878b879910d54, type: 2}
-  crutch: {fileID: 0}
-  teeth: {fileID: 0}
+  crutch: {fileID: 8300000, guid: 5c0d205ab96411c429b99e52c1398731, type: 3}
+  teeth: {fileID: 8300000, guid: 301cf9b285323de4ea7222968dbdf421, type: 3}
+  hurt: {fileID: 8300000, guid: 57170c05a8fac564eb85f7d29cc64426, type: 3}
 --- !u!50 &4018818071378840763
 Rigidbody2D:
   serializedVersion: 5
@@ -513,8 +503,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.07731218, y: -0.49895564}
-  m_Size: {x: 0.71326035, y: 0.96566975}
+  m_Offset: {x: 0.07731218, y: -0.53992134}
+  m_Size: {x: 0.71326035, y: 1.0476012}
   m_Direction: 0
 --- !u!82 &6057405492113938571
 AudioSource:
@@ -529,7 +519,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef483fac21efee94d926d3f5f40a9f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 20
+  maxDistance: 10
 --- !u!50 &4039463366609423575
 Rigidbody2D:
   serializedVersion: 5

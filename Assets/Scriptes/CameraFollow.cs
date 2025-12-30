@@ -17,6 +17,7 @@ public class CameraFollow : MonoBehaviour
 
     // 設定觸發跟隨的高度閾值
     public float followThresholdY = 3f;
+    public float followThresholdY_low = -5f;
 
 
     void Start()
@@ -55,6 +56,11 @@ public class CameraFollow : MonoBehaviour
         {
             // 計算玩家超過閾值多少，並將這個位移加到攝影機的原始位置上
             float difference = target.position.y - followThresholdY;
+            targetY = originalY + difference;
+        }
+        else if (target.position.y < followThresholdY_low)
+        {
+            float difference = target.position.y - followThresholdY_low;
             targetY = originalY + difference;
         }
 
